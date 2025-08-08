@@ -81,11 +81,11 @@ export default function SignInPage() {
                 backgroundColor: "background.paper",
               }}
             >
-              <img
+              {/* <img
                 src="https://assets-global.website-files.com/6597ccac92169b5965419146/659b8e28448e3a2998f80689_logo.svg"
                 alt="Utherside Logo"
                 width="120"
-              />
+              /> */}
 
               <Typography
                 component="h1"
@@ -94,8 +94,6 @@ export default function SignInPage() {
               >
                 Sign in
               </Typography>
-
-              {/* NEW: A single container for all form fields with consistent spacing */}
               <Box
                 sx={{
                   width: "100%",
