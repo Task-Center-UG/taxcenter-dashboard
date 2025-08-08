@@ -82,12 +82,12 @@ const ReusableInput = ({
             multiline={multiline}
             rows={multiline ? rows : 1}
             sx={{
-              backgroundColor: disabled ? "#F9FAFB" : "white", // Gray background when disabled
+              backgroundColor: "background.paper",
               width: selectWidth,
-              cursor: disabled ? "not-allowed" : "pointer", // Change cursor when disabled
+              cursor: disabled ? "not-allowed" : "pointer",
               "& .MuiOutlinedInput-root": {
                 borderRadius: "8px",
-                backgroundColor: disabled ? "#F9FAFB" : "white", // Gray background when disabled
+                backgroundColor: "background.paper",
                 minHeight: multiline ? 56 : 44,
                 padding: "6px 0px",
                 color: disabled ? "#9CA3AF" : "inherit", // Gray text when disabled

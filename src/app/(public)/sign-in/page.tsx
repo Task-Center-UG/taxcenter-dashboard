@@ -16,6 +16,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ReusableInput from "@/components/input/ReusableInput";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const UserSchema = z.object({
   username: z.string().min(1, "Required"),
@@ -25,6 +27,8 @@ const UserSchema = z.object({
 type UserFormData = z.infer<typeof UserSchema>;
 
 export default function SignInPage() {
+  const router = useRouter();
+
   // USE FORM
   const methods = useForm<UserFormData>({
     resolver: zodResolver(UserSchema),
@@ -38,7 +42,15 @@ export default function SignInPage() {
 
   // HANDLE SUBMIT
   const onSubmit = async (data: UserFormData) => {
-    console.log(data);
+    console.log("Form Data:", data);
+    const fakeJwtToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+    Cookies.set("jwt_access_token", fakeJwtToken, {
+      expires: 1,
+      path: "/",
+    });
+    console.log("Cookie 'jwt_access_token' has been set.");
+    router.push("/dashboard");
   };
   const onError = (errors: any) => {
     console.error("VALIDATION FAILED:", errors);
@@ -56,11 +68,7 @@ export default function SignInPage() {
     >
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit, onError)}
-            noValidate
-          >
+          <Box>
             <Box
               sx={{
                 p: { xs: 3, sm: 4 },

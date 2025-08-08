@@ -1,11 +1,17 @@
+import SidebarLayout from "@/components/appbar/SidebarLayout";
+import { primaryMenuItems, secondaryMenuItems } from "@/configs/menuItems";
+
 export default function PrivateLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <SidebarLayout
+      primaryMenuItems={primaryMenuItems}
+      secondaryMenuItems={secondaryMenuItems}
+    >
+      {children}
+    </SidebarLayout>
   );
 }
