@@ -1,3 +1,5 @@
+// ThemeContextProvider.tsx
+
 "use client";
 
 import { createContext, useState, useMemo, useEffect, ReactNode } from "react";
@@ -8,45 +10,44 @@ import {
 import CssBaseline from "@mui/material/CssBaseline";
 
 const getDesignTokens = (mode: "light" | "dark") => ({
+  // Your getDesignTokens function remains the same...
   palette: {
     mode,
     ...(mode === "light"
       ? {
-          // palette values for light mode
           primary: { main: "#1976d2" },
           background: { default: "#f5f5f5", paper: "#ffffff" },
         }
       : {
-          // palette values for dark mode
           primary: { main: "#90caf9" },
           background: { default: "#121212", paper: "#1e1e1e" },
         }),
   },
 });
 
-// Create a context for the color mode
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
 
-// Create the provider component
 export function ThemeContextProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  const [mode, setMode] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return "light";
+    const saved = window.localStorage.getItem("color-mode") as
+      | "light"
+      | "dark"
+      | null;
+    return saved ?? "light";
+  });
 
-  // On initial load, check for saved theme in localStorage
+  // ⭐ NEW: This useEffect syncs the MUI mode with Tailwind's dark class
   useEffect(() => {
-    try {
-      const savedMode = window.localStorage.getItem("color-mode") as
-        | "light"
-        | "dark"
-        | null;
-      if (savedMode) {
-        setMode(savedMode);
-      }
-    } catch (e) {
-      console.error("Could not load color mode from localStorage", e);
+    const root = window.document.documentElement; // This is the <html> tag
+    if (mode === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
     }
-  }, []);
+  }, [mode]); // Rerun this effect whenever the mode changes
 
   const colorMode = useMemo(
     () => ({

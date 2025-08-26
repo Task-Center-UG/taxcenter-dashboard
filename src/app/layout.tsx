@@ -28,12 +28,12 @@ export default function RootLayout({
     <html lang="en" className={roboto.variable}>
       <body>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <ThemeContextProvider>
-              {children}
-              <ThemeToggleButton />
-            </ThemeContextProvider>
-          </ThemeProvider>
+          {/* <ThemeProvider theme={theme}> */}
+          <ThemeContextProvider>
+            {children}
+            <ThemeToggleButton />
+          </ThemeContextProvider>
+          {/* </ThemeProvider> */}
         </AppRouterCacheProvider>
       </body>
     </html>
