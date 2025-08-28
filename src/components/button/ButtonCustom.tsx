@@ -37,7 +37,7 @@ export default function ButtonCustom({
   isActive = false,
   label,
   padingX = 3,
-  padingY = 1.5,
+  padingY = 1,
   variant = "contained",
   color = "primary",
   type = "button",
@@ -89,7 +89,7 @@ export default function ButtonCustom({
         paddingY: padingY,
         width: fullWidth ? "100%" : "fit-content",
         whiteSpace: "nowrap",
-        borderRadius: 2,
+        borderRadius: 3,
         ...(isContentVariant && {
           backgroundColor: "#EFF8FF",
           color: "#1570EF",
