@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -22,6 +22,10 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 import { SidebarItem, MenuItem as MenuItemType } from "@/configs/menuItems";
+import logoTaxcenter from "@/../public/assets/logo/logo-taxcenter.jpg";
+import Cookies from "js-cookie";
+import { Stack, Typography } from "@mui/material";
+import BaseAvatar from "../avatar/BaseAvatar";
 
 const drawerWidth = 280;
 
@@ -96,6 +100,7 @@ interface AppLayoutProps {
 }
 
 export default function SidebarLayout(props: AppLayoutProps) {
+  const router = useRouter();
   const { window, children, sidebarItems } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
@@ -115,6 +120,20 @@ export default function SidebarLayout(props: AppLayoutProps) {
     }
   };
 
+  const handleLogout = () => {
+    try {
+      Cookies.remove("jwt_access_token", { path: "/" });
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const userMenuItems = [
+    { label: "Edit Profile", onClick: () => console.log("Editing...") },
+    { label: "Logout", onClick: handleLogout },
+  ];
+
   const drawer = (
     <div>
       <Box
@@ -126,13 +145,13 @@ export default function SidebarLayout(props: AppLayoutProps) {
         }}
       >
         <Image
-          src="/tax-center-logo.png"
+          src={logoTaxcenter}
           alt="Tax Center Logo"
-          width={180}
+          width={150}
           height={40}
         />
       </Box>
-      <Divider />
+      <Divider sx={{ mb: 2 }} />
       <List sx={{ pt: 0, pb: 2 }}>
         {sidebarItems.map((item) => {
           if (item.type === "header") {
@@ -173,10 +192,15 @@ export default function SidebarLayout(props: AppLayoutProps) {
           ml: { sm: `${drawerWidth}px` },
           boxShadow: "none",
           borderBottom: "1px solid",
-          borderColor: "divider",
         }}
       >
-        <Toolbar sx={{ backgroundColor: "background.paper" }}>
+        <Toolbar
+          sx={{
+            backgroundColor: "background.paper",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -190,6 +214,37 @@ export default function SidebarLayout(props: AppLayoutProps) {
           >
             <MenuIcon />
           </IconButton>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={2}
+            sx={{ ml: "auto" }}
+          >
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  textAlign: "right",
+                }}
+              >
+                <Typography
+                  sx={{ color: "black", fontSize: 16, fontWeight: 500 }}
+                >
+                  Super Admin
+                </Typography>
+                <Typography sx={{ color: "GrayText", fontSize: 14 }}>
+                  superadmin@example.com
+                </Typography>
+              </Box>
+              <BaseAvatar
+                clickable
+                clickMode="dropdown"
+                menuItems={userMenuItems}
+                imageUrl="/path/to/image.jpg"
+              />
+            </Box>
+          </Stack>
         </Toolbar>
       </AppBar>
       <Box
@@ -211,7 +266,6 @@ export default function SidebarLayout(props: AppLayoutProps) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              // ✅ ADDED: Scrollbar styling for the mobile drawer
               overflowY: "auto",
               "&::-webkit-scrollbar": {
                 width: "6px",
@@ -238,7 +292,6 @@ export default function SidebarLayout(props: AppLayoutProps) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              // ✅ ADDED: Scrollbar styling for the desktop drawer
               overflowY: "auto",
               "&::-webkit-scrollbar": {
                 width: "6px",

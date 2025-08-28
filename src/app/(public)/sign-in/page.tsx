@@ -49,7 +49,6 @@ export default function SignInPage() {
       expires: 1,
       path: "/",
     });
-    console.log("Cookie 'jwt_access_token' has been set.");
     router.push("/dashboard");
   };
   const onError = (errors: any) => {
