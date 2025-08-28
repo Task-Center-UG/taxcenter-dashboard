@@ -23,7 +23,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import Image from "next/image";
 import { SidebarItem, MenuItem as MenuItemType } from "@/configs/menuItems";
 
-const drawerWidth = 320;
+const drawerWidth = 280;
 
 const SidebarMenuItem: React.FC<{ item: MenuItemType }> = ({ item }) => {
   const pathname = usePathname();
@@ -49,7 +49,12 @@ const SidebarMenuItem: React.FC<{ item: MenuItemType }> = ({ item }) => {
           <ListItemIcon>
             <IconComponent />
           </ListItemIcon>
-          <ListItemText primary={text} />
+          <ListItemText
+            primary={text}
+            slotProps={{
+              primary: { sx: { fontSize: "0.875rem" } },
+            }}
+          />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -73,7 +78,12 @@ const SidebarMenuItem: React.FC<{ item: MenuItemType }> = ({ item }) => {
         <ListItemIcon>
           <IconComponent />
         </ListItemIcon>
-        <ListItemText primary={text} />
+        <ListItemText
+          primary={text}
+          slotProps={{
+            primary: { sx: { fontSize: "0.875rem" } },
+          }}
+        />
       </ListItemButton>
     </ListItem>
   );
@@ -129,6 +139,7 @@ export default function SidebarLayout(props: AppLayoutProps) {
             return (
               <ListSubheader
                 key={item.text}
+                disableSticky={true}
                 sx={{
                   backgroundColor: "transparent",
                   textTransform: "uppercase",
