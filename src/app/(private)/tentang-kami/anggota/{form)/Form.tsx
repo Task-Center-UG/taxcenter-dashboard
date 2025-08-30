@@ -1,6 +1,8 @@
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ReusableInput from "@/components/input/ReusableInput";
+import ReusableSelect from "@/components/input/ReusableSelect";
 import ReusableUploadZone from "@/components/input/ReusableUploadZone";
+import { dummyOption } from "@/store/DummyData";
 import { Paper } from "@mui/material";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -20,7 +22,7 @@ const Form = () => {
         <div className="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <ReusableInput
             name=""
-            label="Title"
+            label="Name"
             control={control}
             errors={errors}
             placeholder="Input"
@@ -28,7 +30,7 @@ const Form = () => {
           />
           <ReusableInput
             name=""
-            label="Description"
+            label="Contact Number"
             control={control}
             errors={errors}
             placeholder="Input"
@@ -36,15 +38,21 @@ const Form = () => {
           />
           <ReusableInput
             name=""
-            label="Hyperlink"
+            label="Email"
             control={control}
             errors={errors}
             placeholder="Input"
             isRequired
           />
-          <div className="col-span-1 sm:col-span-2 md:col-span-3">
-            <ReusableUploadZone name="" control={control} />
-          </div>
+          <ReusableSelect
+            name=""
+            label="Division"
+            control={control}
+            errors={errors}
+            options={dummyOption}
+            placeholder="Select Division"
+            isRequired
+          />
         </div>
       </Paper>
     </div>

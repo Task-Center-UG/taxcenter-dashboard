@@ -15,7 +15,7 @@ const page = () => {
         <div className="flex gap-4">
           <ButtonCustom
             label="Add Content"
-            onClick={() => route.push("/beranda/hero-slider/create")}
+            onClick={() => route.push("/tentang-kami/mitra/create")}
           />
         </div>
       </div>

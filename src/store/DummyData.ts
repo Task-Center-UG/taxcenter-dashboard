@@ -56,3 +56,8 @@ export const data: ProductRow[] = [
     price: "$99",
   },
 ];
+
+export const dummyOption = [
+  { value: "yes", label: "Yes" },
+  { value: "no", label: "No" },
+];

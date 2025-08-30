@@ -58,12 +58,12 @@ export const sidebarItems: SidebarItem[] = [
     icon: ViewCarouselOutlinedIcon,
     path: "/beranda/hero-slider",
   },
-  {
-    type: "item",
-    text: "Company Profile",
-    icon: ApartmentOutlinedIcon,
-    path: "/beranda/company-profile",
-  },
+  // {
+  //   type: "item",
+  //   text: "Company Profile",
+  //   icon: ApartmentOutlinedIcon,
+  //   path: "/beranda/company-profile",
+  // },
   {
     type: "item",
     text: "Penghargaan",
@@ -78,14 +78,14 @@ export const sidebarItems: SidebarItem[] = [
     children: [
       {
         type: "item",
-        text: "Struktur",
-        icon: AccountTreeOutlinedIcon,
-        path: "/tentang-kami/struktur-organisasi",
+        text: "Anggota",
+        icon: Diversity3OutlinedIcon,
+        path: "/tentang-kami/anggota",
       },
       {
         type: "item",
         text: "Divisi",
-        icon: Diversity3OutlinedIcon,
+        icon: AccountTreeOutlinedIcon,
         path: "/tentang-kami/divisi",
       },
     ],

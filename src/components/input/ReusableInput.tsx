@@ -72,9 +72,10 @@ const ReusableInput = ({
       fontSize: "0.875rem",
       color: theme.palette.text.primary,
       "& .MuiOutlinedInput-notchedOutline": {
+        // Change this line to a darker grey
         borderColor:
           theme.palette.mode === "light"
-            ? theme.palette.grey[300]
+            ? theme.palette.grey[400] // Changed from grey[300] to grey[400]
             : theme.palette.grey[600],
       },
       "&:hover .MuiOutlinedInput-notchedOutline": {
