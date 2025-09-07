@@ -8,8 +8,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ReusableInput from "@/components/input/ReusableInput";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
 
 const UserSchema = z.object({
   username: z.string().min(1, "Required"),
@@ -18,8 +18,14 @@ const UserSchema = z.object({
 
 type UserFormData = z.infer<typeof UserSchema>;
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const proxyUrl = "/api";
+
 export default function SignInPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [apiError, setApiError] = React.useState<string | null>(null);
+  console.log(baseUrl, proxyUrl);
 
   // USE FORM
   const methods = useForm<UserFormData>({
@@ -34,14 +40,35 @@ export default function SignInPage() {
 
   // HANDLE SUBMIT
   const onSubmit = async (data: UserFormData) => {
-    console.log("Form Data:", data);
-    const fakeJwtToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-    Cookies.set("jwt_access_token", fakeJwtToken, {
-      expires: 1,
-      path: "/",
-    });
-    router.push("/dashboard");
+    setApiError(null);
+
+    try {
+      const response = await axios.post(`${proxyUrl}/v1/auth/login`, data, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
+      if (response.data.status === "OK" && response.status === 200) {
+        console.log("Login successful:", response.data);
+        const nextUrl = searchParams.get("next");
+        router.replace(nextUrl || "/dashboard");
+        router.refresh();
+      } else {
+        setApiError(response.data.message || "An unexpected error occurred.");
+      }
+    } catch (error) {
+      console.error("Login API failed:", error);
+      if (axios.isAxiosError(error) && error.response) {
+        setApiError(
+          error.response.data.message || "Invalid username or password."
+        );
+      } else {
+        setApiError("A network error occurred. Please try again.");
+      }
+    }
   };
   const onError = (errors: any) => {
     console.error("VALIDATION FAILED:", errors);
@@ -106,6 +133,11 @@ export default function SignInPage() {
                   errors={errors}
                   type="password"
                 />
+                {apiError && (
+                  <Typography color="error" variant="body2" textAlign="center">
+                    {apiError}
+                  </Typography>
+                )}
                 <ButtonCustom label="Sign In" fullWidth={true} type="submit" />
               </Box>
 
