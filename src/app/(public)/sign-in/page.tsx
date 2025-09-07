@@ -25,7 +25,6 @@ export default function SignInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [apiError, setApiError] = React.useState<string | null>(null);
-  console.log(baseUrl, proxyUrl);
 
   // USE FORM
   const methods = useForm<UserFormData>({

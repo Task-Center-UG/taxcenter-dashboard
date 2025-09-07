@@ -26,6 +26,7 @@ import logoTaxcenter from "@/../public/assets/logo/logo-taxcenter.jpg";
 import Cookies from "js-cookie";
 import { Stack, Typography } from "@mui/material";
 import BaseAvatar from "../avatar/BaseAvatar";
+import { useMutation } from "@/hooks/useMutation";
 
 const drawerWidth = 280;
 
@@ -104,6 +105,7 @@ export default function SidebarLayout(props: AppLayoutProps) {
   const { window, children, sidebarItems } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const { mutate: logout, isMutating: isLoggingOut } = useMutation();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -120,12 +122,14 @@ export default function SidebarLayout(props: AppLayoutProps) {
     }
   };
 
-  const handleLogout = () => {
-    try {
-      Cookies.remove("jwt_access_token", { path: "/" });
-      router.push("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
+  const handleLogout = async () => {
+    const result = await logout("/v1/auth/logout", "POST");
+
+    if (result) {
+      router.push("/sign-in");
+      router.refresh();
+    } else {
+      alert("Logout failed. Please try again.");
     }
   };
 
