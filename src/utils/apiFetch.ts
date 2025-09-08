@@ -5,8 +5,10 @@ export default function apiFetch(
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const proxyUrl = "/api";
 
-  const defaultHeaders = {
-    "Content-Type": "application/json",
+  const defaultHeaders: HeadersInit = {
+    ...(options.body instanceof FormData
+      ? {}
+      : { "Content-Type": "application/json" }),
     Accept: "application/json",
   };
 
@@ -19,7 +21,7 @@ export default function apiFetch(
     },
   };
 
-  const fullUrl = `${proxyUrl}${endpoint}`;
+  const fullUrl = `${proxyUrl}/v1/${endpoint}`;
 
   return fetch(fullUrl, config);
 }

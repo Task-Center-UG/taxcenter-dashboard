@@ -7,22 +7,28 @@ import {
   TableHead,
   TableRow,
   Paper,
+  CircularProgress,
+  Box,
+  TableCellProps,
 } from "@mui/material";
 
 export type Column<RowType extends Record<string, unknown>> = {
   header: React.ReactNode;
   accessor?: keyof RowType;
   cell?: (row: RowType) => React.ReactNode;
+  align?: TableCellProps["align"];
 };
 
 interface ReusableTableProps<RowType extends Record<string, unknown>> {
   columns: Array<Column<RowType>>;
   data: Array<RowType>;
+  isLoading?: boolean;
 }
 
 const ReusableTable = <RowType extends Record<string, unknown>>({
   columns,
   data,
+  isLoading = false,
 }: ReusableTableProps<RowType>) => {
   return (
     <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
@@ -39,6 +45,8 @@ const ReusableTable = <RowType extends Record<string, unknown>>({
             {columns.map((col, colIndex) => (
               <TableCell
                 key={colIndex}
+                // Apply the align prop to the header cell
+                align={col.align || "left"}
                 sx={{
                   fontWeight: "bold",
                   textTransform: "uppercase",
@@ -52,7 +60,18 @@ const ReusableTable = <RowType extends Record<string, unknown>>({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.length === 0 ? (
+          {isLoading ? (
+            <TableRow>
+              <TableCell
+                colSpan={columns.length}
+                sx={{ textAlign: "center", py: 10 }}
+              >
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <CircularProgress />
+                </Box>
+              </TableCell>
+            </TableRow>
+          ) : data.length === 0 ? (
             <TableRow>
               <TableCell
                 colSpan={columns.length}
@@ -84,6 +103,7 @@ const ReusableTable = <RowType extends Record<string, unknown>>({
                         key={colIndex}
                         component="th"
                         scope="row"
+                        align={col.align || "left"}
                         sx={{ fontWeight: "medium" }}
                       >
                         {cellContent}
@@ -91,7 +111,7 @@ const ReusableTable = <RowType extends Record<string, unknown>>({
                     );
                   }
                   return (
-                    <TableCell key={colIndex} align="left">
+                    <TableCell key={colIndex} align={col.align || "left"}>
                       {cellContent}
                     </TableCell>
                   );

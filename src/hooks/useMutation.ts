@@ -3,7 +3,8 @@
 import { useState } from "react";
 import apiFetch from "@/utils/apiFetch";
 
-export const useMutation = <T, K>() => {
+export const useMutation = <T, K extends Record<string, any>>() => {
+  // Add constraint to K
   const [isMutating, setIsMutating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,10 +15,32 @@ export const useMutation = <T, K>() => {
   ): Promise<T | null> => {
     setIsMutating(true);
     setError(null);
+
+    const isMultipart = payload
+      ? Object.values(payload).some((value) => value instanceof File)
+      : false;
+
+    let body: BodyInit | undefined;
+    const headers: HeadersInit = {};
+
+    if (isMultipart && payload) {
+      const formData = new FormData();
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value !== undefined) {
+          formData.append(key, value);
+        }
+      });
+      body = formData;
+    } else {
+      body = payload ? JSON.stringify(payload) : undefined;
+      headers["Content-Type"] = "application/json";
+    }
+
     try {
       const response = await apiFetch(endpoint, {
         method,
-        body: payload ? JSON.stringify(payload) : undefined,
+        body,
+        headers,
       });
 
       if (!response.ok) {

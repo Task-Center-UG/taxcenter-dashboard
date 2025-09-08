@@ -25,6 +25,7 @@ export default function SignInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [apiError, setApiError] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
 
   // USE FORM
   const methods = useForm<UserFormData>({
@@ -40,6 +41,7 @@ export default function SignInPage() {
   // HANDLE SUBMIT
   const onSubmit = async (data: UserFormData) => {
     setApiError(null);
+    setLoading(true);
 
     try {
       const response = await axios.post(`${proxyUrl}/v1/auth/login`, data, {
@@ -67,6 +69,8 @@ export default function SignInPage() {
       } else {
         setApiError("A network error occurred. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
   const onError = (errors: any) => {
@@ -137,7 +141,12 @@ export default function SignInPage() {
                     {apiError}
                   </Typography>
                 )}
-                <ButtonCustom label="Sign In" fullWidth={true} type="submit" />
+                <ButtonCustom
+                  label="Sign In"
+                  isLoading={loading}
+                  fullWidth={true}
+                  type="submit"
+                />
               </Box>
 
               <Link href="#" variant="body2">
