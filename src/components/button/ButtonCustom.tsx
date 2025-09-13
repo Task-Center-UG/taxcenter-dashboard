@@ -26,9 +26,7 @@ interface ButtonCustomProps {
   isLoading?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  sx?: {
-    [key: string]: any;
-  };
+  sx?: object;
 }
 
 export default function ButtonCustom({
@@ -49,7 +47,7 @@ export default function ButtonCustom({
   endIcon,
   sx = {},
 }: ButtonCustomProps) {
-  const navigate = useRouter();
+  const router = useRouter();
   const isDefaultColor = color === "default";
   const isContentVariant = variant === "content";
   const muiVariant = isContentVariant ? "text" : variant;
@@ -59,43 +57,39 @@ export default function ButtonCustom({
       onClick();
     }
     if (to) {
-      navigate.push(to);
+      router.push(to);
     }
   };
 
-  const getButtonStyles = () => {
-    if (isActive) {
-      return {
-        backgroundColor: "#E6F3FF",
-        "&:hover": {
-          backgroundColor: "#FAFCFF",
-        },
-      };
-    }
-    return {};
-  };
+  const finalStartIcon = isLoading ? null : withPlusIcon ? (
+    <AddIcon />
+  ) : (
+    startIcon
+  );
+  const finalEndIcon = isLoading ? null : endIcon;
 
   return (
     <Button
       variant={muiVariant}
       onClick={handleClick}
       type={type}
-      endIcon={isLoading ? undefined : endIcon}
-      startIcon={isLoading ? undefined : withPlusIcon ? <AddIcon /> : startIcon}
+      startIcon={finalStartIcon}
+      endIcon={finalEndIcon}
       disabled={isDisabled || isLoading}
       sx={{
-        ...getButtonStyles(),
         paddingX: padingX,
         paddingY: padingY,
         width: fullWidth ? "100%" : "fit-content",
         whiteSpace: "nowrap",
         borderRadius: 3,
+        ...(isActive && {
+          backgroundColor: "#E6F3FF",
+          "&:hover": { backgroundColor: "#FAFCFF" },
+        }),
         ...(isContentVariant && {
           backgroundColor: "#EFF8FF",
           color: "#1570EF",
-          "&:hover": {
-            backgroundColor: "#dbeffd",
-          },
+          "&:hover": { backgroundColor: "#dbeffd" },
         }),
         ...(isDefaultColor && {
           backgroundColor: variant === "contained" ? "#F3F3FA" : "transparent",
@@ -106,22 +100,21 @@ export default function ButtonCustom({
           },
         }),
         "&.Mui-disabled": {
-          ...(color === "primary"
-            ? {
-                backgroundColor:
-                  variant === "contained" ? "#e3f2fd" : "transparent",
-                color: "#90caf9",
-                border: variant === "outlined" ? "1px solid #90caf9" : "none",
-              }
-            : {
-                backgroundColor:
-                  variant === "contained" ? "#e0e0e0" : "transparent",
-                color: "#9e9e9e",
-                border: variant === "outlined" ? "1px solid #e0e0e0" : "none",
-              }),
+          backgroundColor:
+            variant === "contained"
+              ? color === "primary"
+                ? "#e3f2fd"
+                : "#e0e0e0"
+              : "transparent",
+          color: color === "primary" ? "#90caf9" : "#9e9e9e",
+          border:
+            variant === "outlined"
+              ? `1px solid ${color === "primary" ? "#90caf9" : "#e0e0e0"}`
+              : "none",
           cursor: "not-allowed",
           opacity: 0.7,
         },
+        ...sx,
       }}
       color={isDefaultColor || isContentVariant ? undefined : color}
     >
