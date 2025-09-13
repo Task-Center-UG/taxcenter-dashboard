@@ -29,3 +29,13 @@ export const formatDate = (date?: string | Date | null): string => {
     year: "numeric",
   });
 };
+
+export const formatText = (str: string) => {
+  if (!str) {
+    return "";
+  }
+  return str
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
