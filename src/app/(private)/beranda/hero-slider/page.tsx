@@ -11,7 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 const page = () => {
   const route = useRouter();
-  const { data: sliders, isLoading, error } = useQuery<Slider[]>("sliders");
+  const { data: sliders, isLoading, error } = useQuery<Slider[]>("cms/sliders");
 
   return (
     <div className="flex flex-col gap-4">

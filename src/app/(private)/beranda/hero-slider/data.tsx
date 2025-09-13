@@ -1,5 +1,7 @@
+import CreatorAvatar from "@/components/avatar/CreatorAvatar";
 import ButtonCustom from "@/components/button/ButtonCustom";
 import type { Column } from "@/components/table/ReusableTable";
+import { formatDate, formatDateYYYYMMDD } from "@/utils/useFormatter";
 import { Link } from "@mui/material";
 
 export const columns: Array<Column<any>> = [
@@ -23,13 +25,35 @@ export const columns: Array<Column<any>> = [
       );
     },
   },
-  { header: "Created At", accessor: "created_at", align: "center" },
-  { header: "Updated At", accessor: "updated_at", align: "center" },
+  {
+    header: "Created At",
+    accessor: "created_at",
+    align: "center",
+    cell: (row) => (
+      <CreatorAvatar
+        name={row.created_by?.username}
+        date={formatDate(row.created_at)}
+      />
+    ),
+  },
+  {
+    header: "Updated At",
+    accessor: "updated_at",
+    align: "center",
+    cell: (row) => (
+      <CreatorAvatar
+        name={row.updated_by?.username}
+        date={formatDate(row.updated_at)}
+      />
+    ),
+  },
   {
     header: "Action",
     accessor: "action",
     align: "center",
-    cell: (row) => <ButtonCustom label="View" />,
+    cell: (row) => (
+      <ButtonCustom label="View" to={`/beranda/hero-slider/${row.id}`} />
+    ),
   },
 ];
 
