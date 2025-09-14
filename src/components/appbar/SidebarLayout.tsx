@@ -123,7 +123,7 @@ export default function SidebarLayout(props: AppLayoutProps) {
   };
 
   const handleLogout = async () => {
-    const result = await logout("/v1/auth/logout", "POST");
+    const result = await logout("/auth/logout", "POST");
 
     if (result) {
       router.push("/sign-in");

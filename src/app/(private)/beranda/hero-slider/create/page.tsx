@@ -5,9 +5,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import Form from "../{form)/Form";
 import ButtonCustom from "@/components/button/ButtonCustom";
 import { useMutation } from "@/hooks/useMutation";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { mutate, isMutating, error } = useMutation();
+  const router = useRouter();
 
   // USE FORM
   const methods = useForm();
@@ -19,6 +21,7 @@ const page = () => {
     const result = await mutate("sliders", "POST", data);
     if (result) {
       console.log("Slider created successfully!");
+      router.push("/beranda/hero-slider");
     } else {
       console.error("Failed to create slider.");
     }
@@ -44,7 +47,12 @@ const page = () => {
               color="default"
               onClick={() => window.history.back()}
             />
-            <ButtonCustom label="Create" color="primary" type="submit" />
+            <ButtonCustom
+              label="Create"
+              color="primary"
+              type="submit"
+              isLoading={isMutating}
+            />
           </div>
         </div>
       </form>

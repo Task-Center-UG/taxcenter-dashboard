@@ -27,14 +27,6 @@ const Form = () => {
             isRequired
           />
           <ReusableInput
-            name="description"
-            label="Description"
-            control={control}
-            errors={errors}
-            placeholder="Input"
-            isRequired
-          />
-          <ReusableInput
             name="cta_url"
             label="Hyperlink"
             control={control}
