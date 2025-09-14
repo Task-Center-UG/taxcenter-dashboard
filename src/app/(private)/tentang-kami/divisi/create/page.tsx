@@ -4,15 +4,36 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../{form)/Form";
 import ButtonCustom from "@/components/button/ButtonCustom";
+import { schema, Schema } from "../{form)/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@/hooks/useMutation";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const { mutate, isMutating, error } = useMutation();
+  const router = useRouter();
+
   // USE FORM
-  const methods = useForm();
+  const methods = useForm<Schema>({
+    resolver: zodResolver(schema),
+  });
   const { handleSubmit } = methods;
 
   // HADLE SUBMIT
-  const onSubmit = () => {};
-  const onError = () => {};
+  const onSubmit = async (data: Schema) => {
+    console.log(data);
+    const result = await mutate("divisions", "POST", data);
+    if (result) {
+      console.log("Division created successfully!");
+      router.push("/tentang-kami/divisi");
+    } else {
+      console.error("Failed to create division.");
+    }
+  };
+  const onError = (errors: any) => {
+    console.error("Form validation failed:", errors);
+  };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -31,7 +52,12 @@ const page = () => {
               color="default"
               onClick={() => window.history.back()}
             />
-            <ButtonCustom label="Create" color="primary" />
+            <ButtonCustom
+              label="Create"
+              color="primary"
+              type="submit"
+              isLoading={isMutating}
+            />
           </div>
         </div>
       </form>

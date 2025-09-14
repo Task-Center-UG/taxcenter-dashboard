@@ -1,15 +1,15 @@
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ReusableInput from "@/components/input/ReusableInput";
-import ReusableSelect from "@/components/input/ReusableSelect";
-import ReusableUploadZone from "@/components/input/ReusableUploadZone";
-import { dummyOption } from "@/store/DummyData";
 import { Paper } from "@mui/material";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { Schema } from "./validation";
+import { ReusableUpload } from "@/components/input/ReusableUpload";
+import ReusableUploadZone from "@/components/input/ReusableUploadZone";
 
 const Form = () => {
   // USE FORM
-  const methods = useFormContext();
+  const methods = useFormContext<Schema>();
   const {
     control,
     formState: { errors },
@@ -21,7 +21,7 @@ const Form = () => {
         <HeaderTitle>Create Form</HeaderTitle>
         <div className="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <ReusableInput
-            name=""
+            name="name"
             label="Name"
             control={control}
             errors={errors}
@@ -29,22 +29,16 @@ const Form = () => {
             isRequired
           />
           <ReusableInput
-            name=""
+            name="description"
             label="Description"
             control={control}
             errors={errors}
             placeholder="Input"
             isRequired
           />
-          <ReusableSelect
-            name=""
-            label="Team Lead"
-            control={control}
-            errors={errors}
-            options={dummyOption}
-            placeholder="Select Division"
-            isRequired
-          />
+          <div className="col-span-1 sm:col-span-2 md:col-span-3">
+            <ReusableUploadZone name="picture_url" control={control} />
+          </div>
         </div>
       </Paper>
     </div>
