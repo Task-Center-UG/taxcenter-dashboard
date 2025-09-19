@@ -4,9 +4,9 @@ import { z } from "zod";
 // Handles undefined state and empty string state separately for better UX.
 export const stringField = z
   .string({
-    message: "This field is required",
+    message: "Required",
   })
-  .min(1, "This field cannot be empty");
+  .min(1, "Required");
 
 export const stringNullable = z.string().nullable().optional();
 
@@ -20,11 +20,7 @@ export const mailField = z
 
 // --- NUMBER ---
 // Coercion is great for form inputs!
-export const numberField = z.coerce
-  .number({
-    message: "This field is required",
-  })
-  .min(1, "Value must be at least 1");
+export const numberField = z.coerce.number().min(1, "Required");
 
 export const numberNullable = z.coerce.number().nullable().optional();
 
