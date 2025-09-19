@@ -8,10 +8,12 @@ import { schema, Schema } from "../{form)/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@/hooks/useMutation";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 const page = () => {
   const { mutate, isMutating, error } = useMutation();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // USE FORM
   const methods = useForm<Schema>({
@@ -25,6 +27,7 @@ const page = () => {
     const result = await mutate("divisions", "POST", data);
     if (result) {
       console.log("Division created successfully!");
+      await queryClient.invalidateQueries({ queryKey: ["divisions"] });
       router.push("/tentang-kami/divisi");
     } else {
       console.error("Failed to create division.");
