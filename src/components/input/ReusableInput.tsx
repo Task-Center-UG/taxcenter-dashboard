@@ -72,10 +72,9 @@ const ReusableInput = ({
       fontSize: "0.875rem",
       color: theme.palette.text.primary,
       "& .MuiOutlinedInput-notchedOutline": {
-        // Change this line to a darker grey
         borderColor:
           theme.palette.mode === "light"
-            ? theme.palette.grey[400] // Changed from grey[300] to grey[400]
+            ? theme.palette.grey[400]
             : theme.palette.grey[600],
       },
       "&:hover .MuiOutlinedInput-notchedOutline": {
@@ -84,6 +83,9 @@ const ReusableInput = ({
       "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: theme.palette.primary.main,
         borderWidth: "1px",
+      },
+      "&.Mui-error .MuiOutlinedInput-notchedOutline": {
+        borderColor: theme.palette.error.main,
       },
     },
     "& .MuiInputBase-input": {
@@ -121,11 +123,12 @@ const ReusableInput = ({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
+        render={({ field, fieldState: { error } }) => (
           <TextField
             {...rest}
             {...field}
             fullWidth
+            error={!!error}
             disabled={disabled}
             placeholder={placeholder}
             type={type}

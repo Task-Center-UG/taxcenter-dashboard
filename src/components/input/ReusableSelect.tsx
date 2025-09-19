@@ -24,7 +24,6 @@ import {
 } from "react-hook-form";
 import InfoOutlineIcon from "@mui/icons-material/InfoOutlined";
 
-// This helper function is the same as in ReusableInput
 interface GetNestedErrorProps {
   errors: FieldErrors;
   path: string;
@@ -50,7 +49,7 @@ interface ReusableSelectProps {
   name: string;
   label?: string;
   control?: Control<any>;
-  errors?: FieldErrors; // Make this optional if not always used with useFormContext
+  errors?: FieldErrors;
   options: Option[];
   placeholder?: string;
   selectWidth?: string;
@@ -63,7 +62,7 @@ interface ReusableSelectProps {
   disabled?: boolean;
   isRequired?: boolean;
   isLoading?: boolean;
-  onClick?: (value: number | string) => void;
+  onClick?: (value: any) => void;
   onValueChange?: (value: any) => void;
   [key: string]: any;
 }
@@ -95,7 +94,7 @@ const ReusableSelect = ({
   const isDisabled = disabled || formDisabled;
   const showAsterisk = isRequired && !!label;
 
-  // Function to apply styles, same as ReusableInput
+  // MUI styling function
   const handleSx = (theme: Theme) => ({
     backgroundColor:
       theme.palette.mode === "light"
@@ -145,7 +144,6 @@ const ReusableSelect = ({
     },
   });
 
-  // The main rendering logic with updated styling
   const renderSelect = (
     fieldValue: any,
     onChange: (...event: any[]) => void,
@@ -171,6 +169,9 @@ const ReusableSelect = ({
           if (onValueChange) {
             onValueChange(newValue);
           }
+          if (onClick) {
+            onClick(newValue);
+          }
         }}
         labelId={`select-${name}-label`}
         id={`select-${name}`}
@@ -183,6 +184,21 @@ const ReusableSelect = ({
           "aria-invalid": hasError,
         }}
         sx={handleSx}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left",
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left",
+          },
+          PaperProps: {
+            style: {
+              maxHeight: 250,
+            },
+          },
+        }}
         renderValue={(selectedValue) => {
           if (multiple) {
             const values = selectedValue as (string | number)[];
@@ -250,7 +266,6 @@ const ReusableSelect = ({
           <MenuItem
             key={String(option.value)}
             value={option.value as unknown as string | number}
-            onClick={() => onClick?.(String(option.value))}
           >
             {option.label}
           </MenuItem>
