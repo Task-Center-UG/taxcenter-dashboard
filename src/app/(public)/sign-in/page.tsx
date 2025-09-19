@@ -21,7 +21,7 @@ type UserFormData = z.infer<typeof UserSchema>;
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 const proxyUrl = "/api";
 
-export default function SignInPage() {
+function SignInPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [apiError, setApiError] = React.useState<string | null>(null);
@@ -157,5 +157,13 @@ export default function SignInPage() {
         </form>
       </FormProvider>
     </Box>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <React.Suspense fallback={null}>
+      <SignInPageContent />
+    </React.Suspense>
   );
 }
