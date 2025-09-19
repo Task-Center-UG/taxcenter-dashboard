@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dashboard Tax Center ✨
 
-## Getting Started
+A modern, high-performance dashboard application for a tax center, built with Next.js 15, Material-UI, and Tailwind CSS.
 
-First, run the development server:
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-orange)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## About The Project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Dashboard Tax Center** is a web application designed to provide a comprehensive and intuitive interface for managing tax-related data. It leverages a modern tech stack to ensure a fast, responsive, and type-safe user experience, from data fetching to form handling.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project serves as a robust foundation for building enterprise-level dashboard applications.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📋 Table of Contents
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Available Scripts](#-available-scripts)
+- [Folder Structure](#-folder-structure)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🚀 Key Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Modern Framework:** Built with **Next.js 15** and **React 19** for top-tier performance and developer experience.
+- **Hybrid UI:** Combines the power of **Material-UI v7** for robust components and **Tailwind CSS v4** for rapid, utility-first styling.
+- **Efficient Data Fetching:** Uses **TanStack Query (React Query) v5** for seamless data synchronization, caching, and optimistic updates.
+- **Robust Form Handling:** Employs **React Hook Form v7** and **Zod** for powerful, type-safe, and easily validated forms.
+- **Type Safety:** Fully written in **TypeScript** to catch errors early and improve code quality.
+- **Fast Development:** Utilizes **Turbopack**, Next.js's lightning-fast bundler, for near-instant development server startup and updates.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛠️ Tech Stack
+
+Here are the major technologies and libraries used in this project:
+
+- **Framework:** [Next.js](https://nextjs.org/) v15
+- **UI Library:** [Material-UI (MUI)](https://mui.com/) v7
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Data Fetching & State Management:** [TanStack Query](https://tanstack.com/query/latest) v5
+- **Form Management:** [React Hook Form](https://react-hook-form.com/) v7
+- **Schema Validation:** [Zod](https://zod.dev/)
+- **HTTP Client:** [Axios](https://axios-http.com/)
+- **Linting:** [ESLint](https://eslint.org/)
+
+---
+
+## 🏁 Getting Started
+
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+Make sure you have the following software installed on your machine:
+
+- [Node.js](https://nodejs.org/en/) (v20.x or later recommended)
+- [npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/), or [pnpm](https://pnpm.io/)
+
+### Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone [https://github.com/your-username/dashboard-tax-center.git](https://github.com/your-username/dashboard-tax-center.git)
+    cd dashboard-tax-center
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env.local` file in the root of the project by copying the example file:
+
+    ```bash
+    cp .env.example .env.local
+    ```
+
+    Now, open `.env.local` and fill in the required environment variables (e.g., API base URL, authentication keys).
+
+4.  **Run the development server:**
+    The project uses Turbopack for fast development.
+    ```bash
+    npm run dev
+    ```
+
+The application will be available at `http://localhost:3000`.
+
+---
+
+## 📜 Available Scripts
+
+In the project directory, you can run the following commands:
+
+- `npm run dev`: Runs the app in development mode with Turbopack.
+- `npm run build`: Builds the app for production.
+- `npm run start`: Starts a production server.
+- `npm run lint`: Lints the code using ESLint.
+
+---
+
+## 🤝 Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is distributed under the MIT License. See `LICENSE.txt` for more information.
