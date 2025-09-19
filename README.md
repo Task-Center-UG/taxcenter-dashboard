@@ -18,26 +18,13 @@ This project serves as a robust foundation for building enterprise-level dashboa
 
 ## 📋 Table of Contents
 
-- [Key Features](#-key-features)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Available Scripts](#-available-scripts)
-- [Folder Structure](#-folder-structure)
 - [Contributing](#-contributing)
 - [License](#-license)
-
----
-
-## 🚀 Key Features
-
-- **Modern Framework:** Built with **Next.js 15** and **React 19** for top-tier performance and developer experience.
-- **Hybrid UI:** Combines the power of **Material-UI v7** for robust components and **Tailwind CSS v4** for rapid, utility-first styling.
-- **Efficient Data Fetching:** Uses **TanStack Query (React Query) v5** for seamless data synchronization, caching, and optimistic updates.
-- **Robust Form Handling:** Employs **React Hook Form v7** and **Zod** for powerful, type-safe, and easily validated forms.
-- **Type Safety:** Fully written in **TypeScript** to catch errors early and improve code quality.
-- **Fast Development:** Utilizes **Turbopack**, Next.js's lightning-fast bundler, for near-instant development server startup and updates.
 
 ---
 
@@ -73,8 +60,8 @@ Make sure you have the following software installed on your machine:
 1.  **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/your-username/dashboard-tax-center.git](https://github.com/your-username/dashboard-tax-center.git)
-    cd dashboard-tax-center
+    git clone https://github.com/Task-Center-UG/taxcenter-dashboard.git
+    cd taxcenter-dashboard
     ```
 
 2.  **Install dependencies:**

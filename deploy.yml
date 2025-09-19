@@ -1,0 +1,30 @@
+name: Deploy to Hostinger VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          script: |
+            # Navigate to the project directory
+            cd /var/www/dashboard-tax-center
+
+            # Create the .env.local file from the GitHub secret
+            echo "${{ secrets.ENV_FILE }}" > .env.local
+
+            # Execute the deployment script
+            ./deploy.sh
