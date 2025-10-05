@@ -1,16 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, IconButton, FormHelperText } from "@mui/material";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { Control, Controller } from "react-hook-form";
 
+type FileValue = File | string;
+
 interface FileUploadZoneProps {
   field: {
-    onChange: (file: File | null) => void;
-    value: File | null;
+    onChange: (files: FileValue | FileValue[] | null) => void;
+    value: FileValue | FileValue[] | null;
     name: string;
   };
   fieldState: {
@@ -18,40 +20,148 @@ interface FileUploadZoneProps {
       message?: string;
     };
   };
+  multiple?: boolean;
 }
 
 const FileUploadZone: React.FC<FileUploadZoneProps> = ({
   field,
   fieldState,
+  multiple = false,
 }) => {
   const { onChange, value, name } = field;
   const { error } = fieldState;
 
+  const [previewUrls, setPreviewUrls] = useState<Map<File, string>>(new Map());
+
+  useEffect(() => {
+    const newPreviewUrls = new Map<File, string>();
+    const files = Array.isArray(value) ? value : value ? [value] : [];
+
+    files.forEach((file) => {
+      if (file instanceof File && file.type.startsWith("image/")) {
+        const objectUrl = URL.createObjectURL(file);
+        newPreviewUrls.set(file, objectUrl);
+      }
+    });
+
+    setPreviewUrls(newPreviewUrls);
+
+    return () => {
+      newPreviewUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [value]);
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    onChange(file);
+    if (!event.target.files) return;
+    const newFiles = Array.from(event.target.files);
+    if (multiple) {
+      const currentFiles = Array.isArray(value) ? value : [];
+      onChange([...currentFiles, ...newFiles]);
+    } else {
+      onChange(newFiles[0] || null);
+    }
   };
 
-  const handleDragOver = (event: React.DragEvent<HTMLLabelElement>) => {
-    event.preventDefault(); // Necessary to allow dropping
-  };
-
-  const handleDrop = (event: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragOver = (event: React.DragEvent<HTMLElement>) => {
     event.preventDefault();
-    const file = event.dataTransfer.files ? event.dataTransfer.files[0] : null;
-    onChange(file);
   };
 
-  const handleClearFile = (event: React.MouseEvent) => {
+  const handleDrop = (event: React.DragEvent<HTMLElement>) => {
     event.preventDefault();
-    onChange(null);
+    if (!event.dataTransfer.files) return;
+    const newFiles = Array.from(event.dataTransfer.files);
+    if (multiple) {
+      const currentFiles = Array.isArray(value) ? value : [];
+      onChange([...currentFiles, ...newFiles]);
+    } else {
+      onChange(newFiles[0] || null);
+    }
+  };
+
+  const handleClearFile = (
+    event: React.MouseEvent,
+    fileToRemove: FileValue
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (multiple && Array.isArray(value)) {
+      onChange(value.filter((file) => file !== fileToRemove));
+    } else {
+      onChange(null);
+    }
+  };
+
+  const filesArray = Array.isArray(value) ? value : value ? [value] : [];
+  const hasFiles = filesArray.length > 0;
+
+  const renderFilePreview = (file: FileValue, index: number) => {
+    const isImage =
+      (file instanceof File && file.type.startsWith("image/")) ||
+      typeof file === "string";
+    const imageUrl =
+      typeof file === "string"
+        ? `${process.env.NEXT_PUBLIC_BASIC_URL}/${file}`
+        : file instanceof File
+        ? previewUrls.get(file)
+        : undefined;
+
+    return (
+      <Box
+        key={typeof file === "string" ? file : file.name + index}
+        sx={{
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: multiple ? 120 : 320,
+          height: multiple ? 120 : 180,
+          borderRadius: 1,
+          overflow: "hidden",
+          border: "1px solid",
+          borderColor: "grey.300",
+        }}
+      >
+        {isImage && imageUrl ? (
+          <img
+            src={imageUrl}
+            alt="Preview"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          <Box sx={{ p: 1, textAlign: "center" }}>
+            <InsertDriveFileOutlinedIcon sx={{ color: "text.secondary" }} />
+            <Typography
+              variant="caption"
+              display="block"
+              sx={{ wordBreak: "break-all" }}
+            >
+              {file instanceof File ? file.name : "file"}
+            </Typography>
+          </Box>
+        )}
+        <IconButton
+          size="small"
+          onClick={(e) => handleClearFile(e, file)}
+          title="Remove file"
+          sx={{
+            position: "absolute",
+            top: 4,
+            right: 4,
+            backgroundColor: "rgba(255,255,255,0.8)",
+            ":hover": { backgroundColor: "rgba(255,255,255,1)" },
+          }}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </Box>
+    );
   };
 
   return (
     <Box>
       <Box
         component="label"
-        htmlFor={name}
+        htmlFor={hasFiles && !multiple ? undefined : name}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         sx={{
@@ -60,16 +170,16 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
-          height: 256, // h-64 equivalent
+          minHeight: 256,
           border: "2px dashed",
           borderColor: error ? "error.main" : "grey.300",
-          borderRadius: 2, // theme.shape.borderRadius * 2
-          cursor: "pointer",
+          borderRadius: 2,
+          cursor: hasFiles && !multiple ? "default" : "pointer",
           bgcolor: "grey.50",
           transition: "background-color 0.2s ease-in-out",
-          ":hover": {
-            bgcolor: "grey.100",
-          },
+          overflow: "hidden",
+          ":hover": { bgcolor: hasFiles && !multiple ? "grey.50" : "grey.100" },
+          p: 2,
         }}
       >
         <input
@@ -78,30 +188,45 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
           type="file"
           hidden
           onChange={handleFileChange}
-          accept="image/svg+xml, image/png, image/jpeg, image/gif"
+          accept="image/*"
+          multiple={multiple}
         />
-        {value ? (
-          <Box sx={{ textAlign: "center" }}>
-            <InsertDriveFileOutlinedIcon
-              sx={{ fontSize: 48, color: "text.secondary" }}
-            />
-            <Typography variant="body1" mt={1}>
-              {value.name}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              ({(value.size / 1024).toFixed(2)} KB)
-            </Typography>
-            <IconButton
-              size="small"
-              onClick={handleClearFile}
-              sx={{ position: "absolute", top: 8, right: 8 }}
-            >
-              <CloseIcon />
-            </IconButton>
+        {hasFiles ? (
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 2,
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            {filesArray.map(renderFilePreview)}
+            {multiple && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 120,
+                  height: 120,
+                }}
+              >
+                <CloudUploadOutlinedIcon sx={{ color: "grey.500" }} />
+                <Typography
+                  variant="caption"
+                  align="center"
+                  sx={{ mt: 1, color: "text.secondary" }}
+                >
+                  Add more files
+                </Typography>
+              </Box>
+            )}
           </Box>
         ) : (
-          // Display when no file is selected
-          <Box sx={{ textAlign: "center" }}>
+          <Box sx={{ textAlign: "center", pointerEvents: "none" }}>
             <CloudUploadOutlinedIcon
               sx={{ width: 48, height: 48, mb: 2, color: "grey.500" }}
             />
@@ -115,7 +240,7 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
               or drag and drop
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              SVG, PNG, JPG or GIF (MAX. 800x400px)
+              SVG, PNG, JPG or GIF
             </Typography>
           </Box>
         )}
@@ -128,19 +253,25 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
 interface ControlledFileUploadZoneProps {
   name: string;
   control: Control<any>;
+  multiple?: boolean;
 }
 
 const ReusableUploadZone: React.FC<ControlledFileUploadZoneProps> = ({
   name,
   control,
+  multiple,
 }) => {
   return (
     <Controller
       name={name}
       control={control}
-      defaultValue={null}
+      defaultValue={multiple ? [] : null}
       render={({ field, fieldState }) => (
-        <FileUploadZone field={field} fieldState={fieldState} />
+        <FileUploadZone
+          field={field}
+          fieldState={fieldState}
+          multiple={multiple}
+        />
       )}
     />
   );

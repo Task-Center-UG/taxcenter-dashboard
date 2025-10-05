@@ -34,3 +34,25 @@ export const dateNullable = z.date().nullable().optional();
 
 // --- BOOLEAN ---
 export const booleanNullable = z.boolean().nullable().optional();
+
+// --- FILE IMAGE ---
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
+export const fileSchema = z
+  .instanceof(File, { message: "Please upload a file." })
+  .refine((file) => file.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+  .refine(
+    (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+    "Only .jpg, .jpeg, .png and .webp formats are supported."
+  );
+
+export const imageValueSchema = z.union([
+  fileSchema,
+  z.string().min(1, "Image URL cannot be empty."),
+]);

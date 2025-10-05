@@ -19,7 +19,9 @@ export const ValueColumn = (props: ValueColumn) => {
           {value}
         </a>
       ) : (
-        <div className="whitespace-pre-line">{value}</div>
+        <div className="whitespace-pre-line flex flex-start text-gray-500">
+          {value}
+        </div>
       )}
     </div>
   );

@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/dashboard",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
@@ -8,6 +17,9 @@ const nextConfig: NextConfig = {
         destination: "https://dev.api.taxcenterug.com/api/:path*",
       },
     ];
+  },
+  images: {
+    domains: ["dev.api.taxcenterug.com", "images.unsplash.com"],
   },
 };
 
