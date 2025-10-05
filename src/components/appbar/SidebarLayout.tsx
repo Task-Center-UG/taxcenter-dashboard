@@ -139,48 +139,71 @@ export default function SidebarLayout(props: AppLayoutProps) {
   ];
 
   const drawer = (
-    <div>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <Box>
+        <Box
+          sx={{
+            p: 2,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            src={logoTaxcenter}
+            alt="Tax Center Logo"
+            width={150}
+            height={40}
+          />
+        </Box>
+        <Divider sx={{ mb: 2 }} />
+      </Box>
+
       <Box
         sx={{
-          p: 2,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          flexGrow: 1,
+          overflowY: "auto",
+          "&::-webkit-scrollbar": {
+            width: "6px",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "transparent",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: (theme) => theme.palette.action.disabled,
+            borderRadius: "3px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: (theme) => theme.palette.action.active,
+          },
         }}
       >
-        <Image
-          src={logoTaxcenter}
-          alt="Tax Center Logo"
-          width={150}
-          height={40}
-        />
+        <List sx={{ pt: 0, pb: 2 }}>
+          {sidebarItems.map((item) => {
+            if (item.type === "header") {
+              return (
+                <ListSubheader
+                  key={item.text}
+                  disableSticky={true}
+                  sx={{
+                    backgroundColor: "transparent",
+                    textTransform: "uppercase",
+                    fontSize: "0.75rem",
+                    fontWeight: "bold",
+                    color: "text.secondary",
+                    pt: 2,
+                    pb: 1,
+                  }}
+                >
+                  {item.text}
+                </ListSubheader>
+              );
+            }
+            return <SidebarMenuItem key={item.text} item={item} />;
+          })}
+        </List>
       </Box>
-      <Divider sx={{ mb: 2 }} />
-      <List sx={{ pt: 0, pb: 2 }}>
-        {sidebarItems.map((item) => {
-          if (item.type === "header") {
-            return (
-              <ListSubheader
-                key={item.text}
-                disableSticky={true}
-                sx={{
-                  backgroundColor: "transparent",
-                  textTransform: "uppercase",
-                  fontSize: "0.75rem",
-                  fontWeight: "bold",
-                  color: "text.secondary",
-                  pt: 2,
-                  pb: 1,
-                }}
-              >
-                {item.text}
-              </ListSubheader>
-            );
-          }
-          return <SidebarMenuItem key={item.text} item={item} />;
-        })}
-      </List>
-    </div>
+    </Box>
   );
 
   const container =

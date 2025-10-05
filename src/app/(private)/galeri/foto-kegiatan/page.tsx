@@ -12,7 +12,6 @@ import { ListGallery } from "@/store/Gallery";
 const page = () => {
   const route = useRouter();
   const { data: gallery, isLoading, error } = useQuery<ListGallery>("gallery");
-  console.log(gallery);
 
   return (
     <div className="flex flex-col gap-4">

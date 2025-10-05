@@ -24,7 +24,7 @@ const Form = (props: Props) => {
   return (
     <div>
       <Paper>
-        <HeaderTitle>Create Form</HeaderTitle>
+        <HeaderTitle>{data ? "Edit Form" : "Create Form"}</HeaderTitle>
         <div className="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <ReusableInput
             name="title"
