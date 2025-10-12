@@ -6,8 +6,15 @@ import { useFormContext } from "react-hook-form";
 import { Schema } from "./validation";
 import { ReusableUpload } from "@/components/input/ReusableUpload";
 import ReusableUploadZone from "@/components/input/ReusableUploadZone";
+import { Division } from "@/store/Division";
 
-const Form = () => {
+interface Props {
+  data?: Division;
+}
+
+const Form = (props: Props) => {
+  const { data } = props;
+
   // USE FORM
   const methods = useFormContext<Schema>();
   const {
@@ -18,7 +25,7 @@ const Form = () => {
   return (
     <div>
       <Paper>
-        <HeaderTitle>Create Form</HeaderTitle>
+        <HeaderTitle>{data ? "Edit Form" : "Create Form"}</HeaderTitle>
         <div className="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <ReusableInput
             name="name"

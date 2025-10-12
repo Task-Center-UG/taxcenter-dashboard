@@ -47,18 +47,13 @@ const page = () => {
     } else {
       formData.append("picture_url", "");
     }
-    console.log(
-      "Submitting FormData to API:",
-      Object.fromEntries(formData.entries())
-    );
-
     const result = await mutate(
       `gallery/${id}`,
       "PUT",
       Object.fromEntries(formData.entries())
     );
+
     if (result) {
-      console.log(result);
       console.log("Gallery created successfully!");
       router.push(`/galeri/foto-kegiatan/${id}`);
     } else {

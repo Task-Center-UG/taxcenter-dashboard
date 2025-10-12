@@ -1,4 +1,5 @@
 import CreatorAvatar from "@/components/avatar/CreatorAvatar";
+import ButtonCustom from "@/components/button/ButtonCustom";
 import type { Column } from "@/components/table/ReusableTable";
 import { formatDate } from "@/utils/useFormatter";
 
@@ -26,7 +27,14 @@ export const columns: Array<Column<any>> = [
       />
     ),
   },
-  { header: "Action", accessor: "action" },
+  {
+    header: "Action",
+    accessor: "action",
+    align: "center",
+    cell: (row) => (
+      <ButtonCustom label="View" to={`/tentang-kami/divisi/${row.id}`} />
+    ),
+  },
 ];
 
 export const data: any[] = [];
