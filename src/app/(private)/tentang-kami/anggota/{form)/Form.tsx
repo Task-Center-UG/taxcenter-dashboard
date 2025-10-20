@@ -5,12 +5,18 @@ import { ReusableUpload } from "@/components/input/ReusableUpload";
 import Loader from "@/components/loading/Loader";
 import { useDivisions } from "@/hooks/useDivisions";
 import { useMajors } from "@/hooks/useMajors";
+import { DivisionAssistant } from "@/store/DivisionAssistant";
 import { dummyOption } from "@/store/DummyData";
 import { Paper } from "@mui/material";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
-const Form = () => {
+interface Props {
+  data?: DivisionAssistant;
+}
+
+const Form = (props: Props) => {
+  const { data } = props;
   const { divisions, paging, isLoading: loadingDivisions } = useDivisions();
   const { majorOptions, isLoading: loadingMajors } = useMajors();
   const isLoading = loadingDivisions || loadingMajors;

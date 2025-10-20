@@ -30,7 +30,7 @@ const page = () => {
     const response = await mutate(`divisions/${id}`, "DELETE");
     if (response) {
       console.log("Division deleted successfully!");
-      router.push("/tentang=kami/divisi");
+      router.push("/tentang-kami/divisi");
     } else {
       console.error("Failed to delete divission.");
     }

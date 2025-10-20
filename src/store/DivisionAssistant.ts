@@ -1,3 +1,4 @@
+import { Division } from "./Division";
 import { UserReference } from "./User";
 
 export type DivisionAssistant = {
@@ -10,6 +11,13 @@ export type DivisionAssistant = {
   updated_at: string;
   created_by: UserReference;
   updated_by: UserReference;
+  Major: Major;
+  Division: Division;
+};
+
+type Major = {
+  name: string;
+  id: number;
 };
 
 export type DivisionAssistants = {
