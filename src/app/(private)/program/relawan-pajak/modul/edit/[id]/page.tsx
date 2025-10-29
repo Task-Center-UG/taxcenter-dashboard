@@ -11,16 +11,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "../../(form)/validation";
 import Loader from "@/components/loading/Loader";
 import { useMutation } from "@/hooks/useMutation";
+import { Module } from "@/store/ModuleRelawanPajak";
 
 const page = () => {
   const { id } = useParams();
   const router = useRouter();
   const {
-    data: division,
+    data: module,
     isLoading,
     error,
     refetch,
-  } = useQuery<Division>(`divisions/${id}`);
+  } = useQuery<Module>(`tax-module/${id}`);
   const { mutate, isMutating } = useMutation();
 
   // USE FORM
@@ -30,39 +31,40 @@ const page = () => {
   const { handleSubmit, reset } = methods;
 
   useEffect(() => {
-    if (division) {
-      reset(division);
+    if (module) {
+      reset(module);
     }
-  }, [division, reset]);
+  }, [module, reset]);
 
   // HADLE SUBMIT
   const onSubmit = async (data: Schema) => {
     const formData = new FormData();
-    formData.append("name", data.name);
+    formData.append("title", data.title);
+    formData.append("category", data.category || "");
     formData.append("description", data.description || "");
 
-    if (data.picture_url instanceof File) {
-      formData.append("picture_url", data.picture_url);
-    } else if (typeof data.picture_url === "string" && data.picture_url) {
+    if (data.file_url instanceof File) {
+      formData.append("file_url", data.file_url);
+    } else if (typeof data.file_url === "string" && data.file_url) {
     } else {
-      formData.append("picture_url", "");
+      formData.append("file_url", "");
     }
 
     const result = await mutate(
-      `divisions/${id}`,
-      "PATCH",
+      `tax-module/${id}`,
+      "PUT",
       Object.fromEntries(formData.entries())
     );
     if (result) {
       console.log("Divisions created successfully!");
-      router.push(`/tentang-kami/divisi/${id}`);
+      router.push(`/program/relawan-pajak/modul/${id}`);
     } else {
       console.error("Failed to create divisions.");
     }
   };
   const onError = () => {};
 
-  if (!division) {
+  if (!module) {
     return <Loader />;
   }
 
@@ -77,7 +79,7 @@ const page = () => {
               color="default"
             />
           </div>
-          <Form data={division} />
+          <Form data={module} />
           <div className="flex justify-between">
             <ButtonCustom
               label="Cancel"

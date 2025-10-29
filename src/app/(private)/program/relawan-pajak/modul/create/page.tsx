@@ -13,7 +13,6 @@ import { useQueryClient } from "@tanstack/react-query";
 const page = () => {
   const { mutate, isMutating, error } = useMutation();
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   // USE FORM
   const methods = useForm<Schema>({
@@ -23,12 +22,10 @@ const page = () => {
 
   // HADLE SUBMIT
   const onSubmit = async (data: Schema) => {
-    console.log(data);
-    const result = await mutate("divisions", "POST", data);
+    const result = await mutate("tax-module", "POST", data);
     if (result) {
       console.log("Division created successfully!");
-      await queryClient.invalidateQueries({ queryKey: ["divisions"] });
-      router.push("/tentang-kami/divisi");
+      router.push("/program/relawan-pajak/modul");
     } else {
       console.error("Failed to create division.");
     }

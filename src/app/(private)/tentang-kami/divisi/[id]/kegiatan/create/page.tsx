@@ -1,19 +1,17 @@
 "use client";
-
+import { useMutation } from "@/hooks/useMutation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import Form from "../(form)/Form";
+import { Schema, schema } from "../(form)/validation";
 import ButtonCustom from "@/components/button/ButtonCustom";
-import { schema, Schema } from "../(form)/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@/hooks/useMutation";
-import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import Form from "../(form)/Form";
 
 const page = () => {
   const { mutate, isMutating, error } = useMutation();
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const { id } = useParams();
 
   // USE FORM
   const methods = useForm<Schema>({
@@ -23,12 +21,14 @@ const page = () => {
 
   // HADLE SUBMIT
   const onSubmit = async (data: Schema) => {
-    console.log(data);
-    const result = await mutate("divisions", "POST", data);
+    const payload = {
+      ...data,
+      division_id: id,
+    };
+    const result = await mutate("activity-divisions", "POST", payload);
     if (result) {
       console.log("Division created successfully!");
-      await queryClient.invalidateQueries({ queryKey: ["divisions"] });
-      router.push("/tentang-kami/divisi");
+      router.push(`/tentang-kami/divisi/${id}`);
     } else {
       console.error("Failed to create division.");
     }

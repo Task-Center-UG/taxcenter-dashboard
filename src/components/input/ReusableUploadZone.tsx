@@ -9,6 +9,10 @@ import { Control, Controller } from "react-hook-form";
 
 type FileValue = File | string;
 
+const isImageUrl = (url: string) => {
+  return /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(url);
+};
+
 interface FileUploadZoneProps {
   field: {
     onChange: (files: FileValue | FileValue[] | null) => void;
@@ -21,12 +25,14 @@ interface FileUploadZoneProps {
     };
   };
   multiple?: boolean;
+  accept?: string;
 }
 
 const FileUploadZone: React.FC<FileUploadZoneProps> = ({
   field,
   fieldState,
   multiple = false,
+  accept = "image/*",
 }) => {
   const { onChange, value, name } = field;
   const { error } = fieldState;
@@ -97,8 +103,9 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
   const renderFilePreview = (file: FileValue, index: number) => {
     const isImage =
       (file instanceof File && file.type.startsWith("image/")) ||
-      typeof file === "string";
-    const imageUrl =
+      (typeof file === "string" && isImageUrl(file));
+
+    const fileUrl =
       typeof file === "string"
         ? `${process.env.NEXT_PUBLIC_BASIC_URL}/${file}`
         : file instanceof File
@@ -121,9 +128,9 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
           borderColor: "grey.300",
         }}
       >
-        {isImage && imageUrl ? (
+        {isImage && fileUrl ? (
           <img
-            src={imageUrl}
+            src={fileUrl}
             alt="Preview"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
@@ -135,7 +142,7 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
               display="block"
               sx={{ wordBreak: "break-all" }}
             >
-              {file instanceof File ? file.name : "file"}
+              {file instanceof File ? file.name : file.split("/").pop()}
             </Typography>
           </Box>
         )}
@@ -188,7 +195,7 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
           type="file"
           hidden
           onChange={handleFileChange}
-          accept="image/*"
+          accept={accept}
           multiple={multiple}
         />
         {hasFiles ? (
@@ -205,6 +212,8 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
             {filesArray.map(renderFilePreview)}
             {multiple && (
               <Box
+                component="label"
+                htmlFor={name}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -212,6 +221,7 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
                   justifyContent: "center",
                   width: 120,
                   height: 120,
+                  cursor: "pointer",
                 }}
               >
                 <CloudUploadOutlinedIcon sx={{ color: "grey.500" }} />
@@ -254,12 +264,14 @@ interface ControlledFileUploadZoneProps {
   name: string;
   control: Control<any>;
   multiple?: boolean;
+  accept?: string;
 }
 
 const ReusableUploadZone: React.FC<ControlledFileUploadZoneProps> = ({
   name,
   control,
   multiple,
+  accept,
 }) => {
   return (
     <Controller
@@ -271,6 +283,7 @@ const ReusableUploadZone: React.FC<ControlledFileUploadZoneProps> = ({
           field={field}
           fieldState={fieldState}
           multiple={multiple}
+          accept={accept}
         />
       )}
     />

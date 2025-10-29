@@ -1,0 +1,70 @@
+import HeaderTitle from "@/components/card/HeaderTitle";
+import ReusableInput from "@/components/input/ReusableInput";
+import { Paper } from "@mui/material";
+import React from "react";
+import { useFormContext } from "react-hook-form";
+import { Schema } from "./validation";
+import { ReusableUpload } from "@/components/input/ReusableUpload";
+import ReusableUploadZone from "@/components/input/ReusableUploadZone";
+import { Division } from "@/store/Division";
+import { Module } from "@/store/ModuleRelawanPajak";
+
+interface Props {
+  data?: Module;
+}
+
+const Form = (props: Props) => {
+  const { data } = props;
+
+  // USE FORM
+  const methods = useFormContext<Schema>();
+  const {
+    control,
+    formState: { errors },
+  } = methods;
+
+  return (
+    <div>
+      <Paper>
+        <HeaderTitle>{data ? "Edit Form" : "Create Form"}</HeaderTitle>
+        <div className="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <ReusableInput
+            name="title"
+            label="Judul"
+            control={control}
+            errors={errors}
+            placeholder="Input"
+            isRequired
+          />
+          <ReusableInput
+            name="category"
+            label="Kategori"
+            control={control}
+            errors={errors}
+            placeholder="Input"
+            isRequired
+          />
+          <ReusableInput
+            name="description"
+            label="Deskripsi"
+            control={control}
+            multiline
+            rows={5}
+            errors={errors}
+            placeholder="Input"
+            isRequired
+          />
+          <div className="col-span-1 sm:col-span-2 md:col-span-3">
+            <ReusableUploadZone
+              name="file_url"
+              control={control}
+              accept=".pdf,.doc,.docx"
+            />
+          </div>
+        </div>
+      </Paper>
+    </div>
+  );
+};
+
+export default Form;

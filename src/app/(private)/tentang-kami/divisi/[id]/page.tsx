@@ -5,14 +5,17 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ImagePreview from "@/components/image/ImagePreview";
 import Loader from "@/components/loading/Loader";
+import ReusableTable from "@/components/table/ReusableTable";
 import { ValueColumn } from "@/components/value/ValueColumn";
 import { useMutation } from "@/hooks/useMutation";
 import { useQuery } from "@/hooks/useQuery";
 import { Division } from "@/store/Division";
+import { DivisionAssistants } from "@/store/DivisionAssistant";
 import { formatDate } from "@/utils/useFormatter";
 import { Card, Paper } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
+import { columns } from "../../anggota/data";
 
 const page = () => {
   const { id } = useParams();
@@ -24,6 +27,11 @@ const page = () => {
     refetch,
   } = useQuery<Division>(`divisions/${id}`);
   const { mutate, isMutating } = useMutation();
+  const { data: assistant, isLoading: loadingAssistant } =
+    useQuery<DivisionAssistants>(`division-assistants?division_id=${id}`);
+  const { data: media, isLoading: loadingMedia } = useQuery<any>(
+    `activity-divisions?division_id=${id}`
+  );
 
   // HANDLE DELETE
   const handleDelete = async () => {
@@ -61,6 +69,10 @@ const page = () => {
             onClick={handleDelete}
           />
           <ButtonCustom label="Edit" to={`/tentang-kami/divisi/edit/${id}`} />
+          <ButtonCustom
+            label="Tambah Foto Kegiatan"
+            to={`/tentang-kami/divisi/${id}/kegiatan/create`}
+          />
         </div>
       </div>
 
@@ -103,10 +115,35 @@ const page = () => {
           </Card>
         </div>
 
-        <Card className="col-span-3">
-          <HeaderTitle>List Anggota</HeaderTitle>
-          <div className="p-8 flex flex-col gap-4"></div>
-        </Card>
+        <div className="col-span-3 flex flex-col gap-8">
+          <Card>
+            <HeaderTitle>List Anggota</HeaderTitle>
+            <div className="p-8 flex flex-col gap-4">
+              <ReusableTable
+                columns={columns}
+                data={assistant?.divisionAssistants ?? []}
+                isLoading={isLoading}
+              />
+            </div>
+          </Card>
+          <Card>
+            <HeaderTitle>List Foto Kegiatan</HeaderTitle>
+            {loadingMedia ? (
+              <Loader />
+            ) : (
+              <div className="p-8 grid grid-cols-3 gap-8">
+                {media?.activityDivisons.map((media: any) => (
+                  <ImagePreview
+                    src={`${process.env.NEXT_PUBLIC_BASIC_URL}/${media?.picture_url}`}
+                    alt="A person standing in a desert canyon."
+                    width={1280}
+                    height={720}
+                  />
+                ))}
+              </div>
+            )}
+          </Card>
+        </div>
       </div>
     </div>
   );

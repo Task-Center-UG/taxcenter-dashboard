@@ -43,6 +43,12 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/png",
   "image/webp",
 ];
+const ACCEPTED_DOCUMENT_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+];
 
 export const fileSchema = z
   .instanceof(File, { message: "Please upload a file." })
@@ -55,4 +61,17 @@ export const fileSchema = z
 export const imageValueSchema = z.union([
   fileSchema,
   z.string().min(1, "Image URL cannot be empty."),
+]);
+
+export const documentFileSchema = z
+  .instanceof(File, { message: "Please upload a document." })
+  .refine((file) => file.size <= MAX_FILE_SIZE, `Max file size is 10MB.`)
+  .refine(
+    (file) => ACCEPTED_DOCUMENT_TYPES.includes(file.type),
+    "Only .pdf, .doc, .docx, and .txt formats are supported."
+  );
+
+export const documentValueSchema = z.union([
+  documentFileSchema,
+  z.string().min(1, "File URL cannot be empty."),
 ]);

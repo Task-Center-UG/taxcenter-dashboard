@@ -106,7 +106,7 @@ export const sidebarItems: SidebarItem[] = [
         type: "item",
         text: "Module",
         icon: LibraryBooksOutlinedIcon,
-        path: "/program/relawan-pajak/module",
+        path: "/program/relawan-pajak/modul",
       },
       {
         type: "item",
@@ -262,5 +262,11 @@ export const sidebarItems: SidebarItem[] = [
     text: "Kelola Pengguna",
     icon: ManageAccountsOutlinedIcon,
     path: "/kelola-pengguna",
+  },
+  {
+    type: "item",
+    text: "Pendaftaran Relawan Pajak",
+    icon: ManageAccountsOutlinedIcon,
+    path: "/relawan-pajak",
   },
 ];
