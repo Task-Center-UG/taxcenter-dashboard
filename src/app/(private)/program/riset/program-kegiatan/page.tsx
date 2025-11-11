@@ -29,7 +29,7 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={researches?.researches ?? []}
+        data={researches?.research ?? []}
         isLoading={isLoading}
       />
     </div>
