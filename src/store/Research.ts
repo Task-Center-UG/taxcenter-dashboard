@@ -19,5 +19,5 @@ export interface Research {
 }
 
 export interface Researches {
-  research: Research[];
+  researches: Research[];
 }
