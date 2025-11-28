@@ -8,6 +8,7 @@ import { useMutation } from "@/hooks/useMutation";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import { Publication } from "@/store/Publication";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -24,6 +25,7 @@ const page = () => {
       reset({
         title: publication.title,
         description: publication.description,
+        year: publication.year,
       });
     }
   }, [publication, reset]);
@@ -44,7 +46,7 @@ const page = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

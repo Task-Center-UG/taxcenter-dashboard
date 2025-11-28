@@ -2,6 +2,7 @@ export interface Publication {
   id: number | string;
   title: string;
   description: string;
+  year?: number;
   created_by?: any;
   created_at?: string;
   updated_by?: any;

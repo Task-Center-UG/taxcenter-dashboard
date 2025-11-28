@@ -1,6 +1,6 @@
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ReusableInput from "@/components/input/ReusableInput";
-import { ReusableUpload } from "@/components/input/ReusableUpload";
+import ReusableUploadZone from "@/components/input/ReusableUploadZone";
 import { Paper } from "@mui/material";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -35,7 +35,7 @@ const Form = () => {
             rows={4}
             isRequired
           />
-          <ReusableUpload name="picture" label="Picture" control={control} />
+          <ReusableUploadZone name="image_url" control={control} />
         </div>
       </Paper>
     </div>

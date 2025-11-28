@@ -6,7 +6,7 @@ import React from "react";
 import { columns } from "./data";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
-import { AgendaSliders } from "@/store/AgendaSlider";
+import { AgendaSlider } from "@/store/AgendaSlider";
 
 const page = () => {
   const route = useRouter();
@@ -14,7 +14,9 @@ const page = () => {
     data: agendaSliders,
     isLoading,
     error,
-  } = useQuery<AgendaSliders>("activity-agenda-image-slider");
+  } = useQuery<AgendaSlider[]>("activity-agenda-image-slider");
+
+  console.log(agendaSliders);
 
   return (
     <div className="flex flex-col gap-4">
@@ -29,7 +31,7 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={agendaSliders?.agendaSliders ?? []}
+        data={agendaSliders ?? []}
         isLoading={isLoading}
       />
     </div>

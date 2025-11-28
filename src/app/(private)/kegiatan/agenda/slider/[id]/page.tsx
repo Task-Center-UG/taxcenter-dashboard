@@ -12,6 +12,7 @@ import React from "react";
 import { formatDate } from "@/utils/useFormatter";
 import ConfirmationDialog from "@/components/confirmation/ConfirmationDialog";
 import ImagePreview from "@/components/image/ImagePreview";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -31,6 +32,10 @@ const page = () => {
       console.error("Failed to delete agenda slider.");
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -57,7 +62,6 @@ const page = () => {
       <Card>
         <HeaderTitle>Detail</HeaderTitle>
         <div className="p-8 grid grid-cols-4 gap-4">
-          <ValueColumn label="Title" value={agendaSlider?.title ?? "-"} />
           <ValueColumn
             label="Created At"
             value={
@@ -85,13 +89,13 @@ const page = () => {
         </div>
       </Card>
 
-      {agendaSlider?.picture_url && (
+      {agendaSlider?.image_url && (
         <Card>
           <HeaderTitle>Media</HeaderTitle>
           <div className="p-8 flex flex-col gap-4">
             <ImagePreview
-              src={`${process.env.NEXT_PUBLIC_BASIC_URL}/${agendaSlider.picture_url}`}
-              alt={agendaSlider.title}
+              src={`${process.env.NEXT_PUBLIC_BASIC_URL}/${agendaSlider.image_url}`}
+              alt="Agenda Slider"
             />
           </div>
         </Card>

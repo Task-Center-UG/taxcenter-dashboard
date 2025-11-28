@@ -34,6 +34,15 @@ const Form = () => {
             rows={4}
             isRequired
           />
+          <ReusableInput
+            name="year"
+            label="Year"
+            control={control}
+            errors={errors}
+            placeholder="Input year (e.g. 2025)"
+            type="number"
+            isRequired
+          />
         </div>
       </Paper>
     </div>

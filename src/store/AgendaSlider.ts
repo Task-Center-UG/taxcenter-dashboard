@@ -6,7 +6,3 @@ export interface AgendaSlider {
   updated_by?: any;
   updated_at?: string;
 }
-
-export interface AgendaSliders {
-  agendaSliders: AgendaSlider[];
-}

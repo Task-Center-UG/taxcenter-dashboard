@@ -8,6 +8,7 @@ import { useMutation } from "@/hooks/useMutation";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import { Article } from "@/store/Article";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -43,7 +44,7 @@ const page = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

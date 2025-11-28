@@ -11,6 +11,7 @@ import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { formatDate } from "@/utils/useFormatter";
 import ConfirmationDialog from "@/components/confirmation/ConfirmationDialog";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -30,6 +31,10 @@ const page = () => {
       console.error("Failed to delete publication.");
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -57,6 +62,10 @@ const page = () => {
           <ValueColumn
             label="Description"
             value={publication?.description ?? "-"}
+          />
+          <ValueColumn
+            label="Year"
+            value={publication?.year?.toString() ?? "-"}
           />
           <ValueColumn
             label="Created At"
