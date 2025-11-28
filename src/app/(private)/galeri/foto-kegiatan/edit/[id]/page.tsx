@@ -3,13 +3,13 @@
 import ButtonCustom from "@/components/button/ButtonCustom";
 import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import Form from "../../{form)/Form";
+import Form from "../../(form)/Form";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import { Gallery } from "@/store/Gallery";
 import Loader from "@/components/loading/Loader";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Schema, schema } from "../../{form)/validation";
+import { Schema, schema } from "../../(form)/validation";
 import { useMutation } from "@/hooks/useMutation";
 
 const page = () => {

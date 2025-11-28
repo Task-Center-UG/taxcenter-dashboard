@@ -2,7 +2,7 @@
 
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import Form from "../{form)/Form";
+import Form from "../(form)/Form";
 import ButtonCustom from "@/components/button/ButtonCustom";
 
 const page = () => {

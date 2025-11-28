@@ -3,7 +3,7 @@
 import ButtonCustom from "@/components/button/ButtonCustom";
 import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import Form from "../../{form)/Form";
+import Form from "../../(form)/Form";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@/store/DivisionAssistant";
 import { useMutation } from "@/hooks/useMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Schema, schema } from "../../{form)/validation";
+import { Schema, schema } from "../../(form)/validation";
 
 const page = () => {
   const { id } = useParams();

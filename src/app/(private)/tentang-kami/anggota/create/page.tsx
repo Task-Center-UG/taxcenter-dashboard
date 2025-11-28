@@ -2,9 +2,9 @@
 
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import Form from "../{form)/Form";
+import Form from "../(form)/Form";
 import ButtonCustom from "@/components/button/ButtonCustom";
-import { schema, Schema } from "../{form)/validation";
+import { schema, Schema } from "../(form)/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@/hooks/useMutation";
 import { useRouter } from "next/navigation";
