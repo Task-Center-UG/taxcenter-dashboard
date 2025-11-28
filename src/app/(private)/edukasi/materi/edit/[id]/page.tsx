@@ -8,6 +8,7 @@ import { useMutation } from "@/hooks/useMutation";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import { TaxMaterial } from "@/store/TaxMaterial";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -24,8 +25,8 @@ const page = () => {
       reset({
         title: taxMaterial.title,
         description: taxMaterial.description,
-        video_url: taxMaterial.video_url,
         file_url: taxMaterial.file_url,
+        image_url: taxMaterial.image_url,
       });
     }
   }, [taxMaterial, reset]);
@@ -46,7 +47,7 @@ const page = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

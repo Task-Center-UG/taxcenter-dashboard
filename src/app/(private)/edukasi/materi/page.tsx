@@ -29,7 +29,7 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={taxMaterials?.taxMaterials ?? []}
+        data={taxMaterials?.mappedMaterials ?? []}
         isLoading={isLoading}
       />
     </div>

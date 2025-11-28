@@ -10,7 +10,7 @@ export const columns: Array<Column<any>> = [
   {
     header: "Category",
     accessor: "researchCategory",
-    cell: (row) => row.researchCategory?.title || "-",
+    cell: (row) => row.ResearchCategory?.title || "-",
   },
   {
     header: "CTA URL",

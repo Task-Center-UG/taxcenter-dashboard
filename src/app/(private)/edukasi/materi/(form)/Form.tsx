@@ -1,5 +1,6 @@
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ReusableInput from "@/components/input/ReusableInput";
+import ReusableUploadZone from "@/components/input/ReusableUploadZone";
 import { Paper } from "@mui/material";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -35,19 +36,13 @@ const Form = () => {
             isRequired
           />
           <ReusableInput
-            name="video_url"
-            label="Video URL"
-            control={control}
-            errors={errors}
-            placeholder="Input video URL"
-          />
-          <ReusableInput
             name="file_url"
             label="File URL"
             control={control}
             errors={errors}
             placeholder="Input file URL"
           />
+          <ReusableUploadZone name="image_url" control={control} />
         </div>
       </Paper>
     </div>

@@ -11,6 +11,8 @@ import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { formatDate } from "@/utils/useFormatter";
 import ConfirmationDialog from "@/components/confirmation/ConfirmationDialog";
+import ImagePreview from "@/components/image/ImagePreview";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -30,6 +32,10 @@ const page = () => {
       console.error("Failed to delete tax material.");
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -57,22 +63,6 @@ const page = () => {
           <ValueColumn
             label="Description"
             value={taxMaterial?.description ?? "-"}
-          />
-          <ValueColumn
-            label="Video URL"
-            value={
-              taxMaterial?.video_url ? (
-                <Link
-                  href={taxMaterial.video_url}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  View Video
-                </Link>
-              ) : (
-                "-"
-              )
-            }
           />
           <ValueColumn
             label="File URL"
@@ -112,6 +102,18 @@ const page = () => {
           />
         </div>
       </Card>
+
+      {taxMaterial?.image_url && (
+        <Card>
+          <HeaderTitle>Media</HeaderTitle>
+          <div className="p-8 flex flex-col gap-4">
+            <ImagePreview
+              src={`${process.env.NEXT_PUBLIC_BASIC_URL}/${taxMaterial.image_url}`}
+              alt={taxMaterial.title}
+            />
+          </div>
+        </Card>
+      )}
 
       <ConfirmationDialog
         open={openDialog}

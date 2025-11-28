@@ -8,6 +8,7 @@ import { useMutation } from "@/hooks/useMutation";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import { AfternoonTalk } from "@/store/AfternoonTalk";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const page = () => {
         title: podcast.title,
         description: podcast.description,
         video_url: podcast.video_url,
-        spotify_url: podcast.spotify_url,
+        image_url: podcast.image_url,
       });
     }
   }, [podcast, reset]);
@@ -46,7 +47,7 @@ const page = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

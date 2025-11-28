@@ -11,6 +11,8 @@ import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { formatDate } from "@/utils/useFormatter";
 import ConfirmationDialog from "@/components/confirmation/ConfirmationDialog";
+import Loader from "@/components/loading/Loader";
+import ImagePreview from "@/components/image/ImagePreview";
 
 const page = () => {
   const { id } = useParams();
@@ -30,6 +32,10 @@ const page = () => {
       console.error("Failed to delete podcast.");
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -71,18 +77,6 @@ const page = () => {
             }
           />
           <ValueColumn
-            label="Spotify URL"
-            value={
-              podcast?.spotify_url ? (
-                <Link href={podcast.spotify_url} target="_blank" rel="noopener">
-                  Listen on Spotify
-                </Link>
-              ) : (
-                "-"
-              )
-            }
-          />
-          <ValueColumn
             label="Created At"
             value={podcast?.created_at ? formatDate(podcast.created_at) : "-"}
           />
@@ -100,6 +94,18 @@ const page = () => {
           />
         </div>
       </Card>
+
+      {podcast?.image_url && (
+        <Card>
+          <HeaderTitle>Media</HeaderTitle>
+          <div className="p-8 flex flex-col gap-4">
+            <ImagePreview
+              src={`${process.env.NEXT_PUBLIC_BASIC_URL}/${podcast.image_url}`}
+              alt={podcast.title}
+            />
+          </div>
+        </Card>
+      )}
 
       <ConfirmationDialog
         open={openDialog}
