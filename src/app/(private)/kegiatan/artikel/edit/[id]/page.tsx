@@ -22,6 +22,7 @@ const page = () => {
       reset({
         title: article.title,
         description: article.description,
+        image_url: article.image_url,
       });
     }
   }, [article, reset]);

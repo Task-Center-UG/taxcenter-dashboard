@@ -12,6 +12,7 @@ import React from "react";
 import { formatDate } from "@/utils/useFormatter";
 import ConfirmationDialog from "@/components/confirmation/ConfirmationDialog";
 import ImagePreview from "@/components/image/ImagePreview";
+import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
@@ -29,6 +30,10 @@ const page = () => {
       console.error("Failed to delete FGD.");
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -76,12 +81,12 @@ const page = () => {
         </div>
       </Card>
 
-      {fgd?.picture_url && (
+      {fgd?.image_url && (
         <Card>
           <HeaderTitle>Media</HeaderTitle>
           <div className="p-8 flex flex-col gap-4">
             <ImagePreview
-              src={`${process.env.NEXT_PUBLIC_BASIC_URL}/${fgd.picture_url}`}
+              src={`${process.env.NEXT_PUBLIC_BASIC_URL}/${fgd.image_url}`}
               alt={fgd.title}
             />
           </div>

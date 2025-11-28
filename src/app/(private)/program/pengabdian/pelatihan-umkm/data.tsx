@@ -9,10 +9,10 @@ export const columns: Array<Column<any>> = [
   { header: "Description", accessor: "description" },
   {
     header: "URL Image",
-    accessor: "picture_url",
+    accessor: "image_url",
     align: "center",
     cell: (row) => {
-      const url = `${process.env.NEXT_PUBLIC_BASIC_URL}/${row.picture_url}`;
+      const url = `${process.env.NEXT_PUBLIC_BASIC_URL}/${row.image_url}`;
       return (
         <Link
           href={url ?? "#"}

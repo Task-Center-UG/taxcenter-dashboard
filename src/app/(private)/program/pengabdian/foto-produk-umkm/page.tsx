@@ -31,7 +31,7 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={umkmPhotos?.umkmProductPhotos ?? []}
+        data={umkmPhotos?.umkmProductPhoto ?? []}
         isLoading={isLoading}
       />
     </div>

@@ -22,7 +22,7 @@ const page = () => {
   useEffect(() => {
     if (agendaSlider) {
       reset({
-        title: agendaSlider.title,
+        image_url: agendaSlider.image_url,
       });
     }
   }, [agendaSlider, reset]);

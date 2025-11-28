@@ -1,6 +1,5 @@
 import HeaderTitle from "@/components/card/HeaderTitle";
-import ReusableInput from "@/components/input/ReusableInput";
-import { ReusableUpload } from "@/components/input/ReusableUpload";
+import ReusableUploadZone from "@/components/input/ReusableUploadZone";
 import { Paper } from "@mui/material";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -17,7 +16,7 @@ const Form = () => {
       <Paper>
         <HeaderTitle>Agenda Slider Form</HeaderTitle>
         <div className="p-8 grid grid-cols-1 gap-8">
-          <ReusableUpload name="image_url" label="Image" control={control} />
+          <ReusableUploadZone name="image_url" control={control} />
         </div>
       </Paper>
     </div>

@@ -2,7 +2,7 @@ export interface Fgd {
   id: number | string;
   title: string;
   description: string;
-  picture_url?: string;
+  image_url?: string;
   created_by?: any;
   created_at?: string;
   updated_by?: any;

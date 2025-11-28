@@ -8,6 +8,7 @@ import { useMutation } from "@/hooks/useMutation";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import { Fgd } from "@/store/Fgd";
+import { Loader } from "lucide-react";
 
 const page = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ const page = () => {
       reset({
         title: fgd.title,
         description: fgd.description,
+        image_url: fgd.image_url,
       });
     }
   }, [fgd, reset]);
@@ -42,7 +44,7 @@ const page = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
