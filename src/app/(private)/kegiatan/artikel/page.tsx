@@ -6,11 +6,11 @@ import React from "react";
 import { columns } from "./data";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
-import { Partners } from "@/store/Partner";
+import { Articles } from "@/store/Article";
 
 const page = () => {
   const route = useRouter();
-  const { data: partners, isLoading, error } = useQuery<Partners>("partners");
+  const { data: articles, isLoading, error } = useQuery<Articles>("article");
 
   return (
     <div className="flex flex-col gap-4">
@@ -19,13 +19,13 @@ const page = () => {
         <div className="flex gap-4">
           <ButtonCustom
             label="Add Content"
-            onClick={() => route.push("/tentang-kami/mitra/create")}
+            onClick={() => route.push("/kegiatan/artikel/create")}
           />
         </div>
       </div>
       <ReusableTable
         columns={columns}
-        data={partners?.partners ?? []}
+        data={articles?.articles ?? []}
         isLoading={isLoading}
       />
     </div>
