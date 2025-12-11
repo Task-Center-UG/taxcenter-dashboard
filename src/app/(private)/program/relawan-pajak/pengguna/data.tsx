@@ -2,7 +2,7 @@ import CreatorAvatar from "@/components/avatar/CreatorAvatar";
 import ButtonCustom from "@/components/button/ButtonCustom";
 import ChipStatus from "@/components/chip/ChipStatus";
 import type { Column } from "@/components/table/ReusableTable";
-import { formatDate, formatText } from "@/utils/useFormatter";
+import { formatDate } from "@/utils/useFormatter";
 
 export const mbkmColumns: Array<Column<any>> = [
   { header: "Nama", accessor: "full_name" },
@@ -21,7 +21,7 @@ export const mbkmColumns: Array<Column<any>> = [
     accessor: "status",
     align: "center",
     cell(row) {
-      return <ChipStatus label={row.status} />;
+      return <ChipStatus label={row.status.toLowerCase()} />;
     },
   },
   {
@@ -65,7 +65,7 @@ export const nonMbkmColumns: Array<Column<any>> = [
     accessor: "status",
     align: "center",
     cell(row) {
-      return <ChipStatus label={formatText(row.status)} />;
+      return <ChipStatus label={row.status.toLowerCase()} />;
     },
   },
   {

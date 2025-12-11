@@ -22,6 +22,42 @@ export type TaxVolunteerMBKM = {
   };
 };
 
+export type TaxVolunteerMBKMDetail = {
+  id: number;
+  full_name: string;
+  class: string;
+  npm: string;
+  address: string;
+  phone_number: string;
+  email: string;
+  tax_volunteer_activities: string;
+  is_already_tax_volunteer: string;
+  ipk: number;
+  krs: string;
+  transcripts: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  region_id: number;
+  major_id: number;
+  Region: {
+    id: number;
+    name: string;
+  };
+  Major: {
+    id: number;
+    name: string;
+  };
+  created_by?: {
+    id: number;
+    username: string;
+  };
+  updated_by?: {
+    id: number;
+    username: string;
+  };
+};
+
 export type TaxVolunteerMBKMs = {
   registrations: TaxVolunteerMBKM[];
   paging?: {
@@ -45,6 +81,42 @@ export type TaxVolunteerNonMBKM = {
   status: string;
   created_at: string;
   updated_at: string;
+  created_by?: {
+    id: number;
+    username: string;
+  };
+  updated_by?: {
+    id: number;
+    username: string;
+  };
+};
+
+export type TaxVolunteerNonMBKMDetail = {
+  id: number;
+  full_name: string;
+  class: string;
+  npm: string;
+  address: string;
+  phone_number: string;
+  email: string;
+  tax_volunteer_activities: string;
+  is_already_tax_volunteer: string;
+  ipk: number;
+  krs: string;
+  transcripts: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  region_id: number;
+  major_id: number;
+  Region: {
+    id: number;
+    name: string;
+  };
+  Major: {
+    id: number;
+    name: string;
+  };
   created_by?: {
     id: number;
     username: string;
