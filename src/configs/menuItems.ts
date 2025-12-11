@@ -256,17 +256,4 @@ export const sidebarItems: SidebarItem[] = [
     icon: PhotoCameraBackOutlinedIcon,
     path: "/galeri/foto-kegiatan",
   },
-  { type: "header", text: "LAINNYA" },
-  {
-    type: "item",
-    text: "Kelola Pengguna",
-    icon: ManageAccountsOutlinedIcon,
-    path: "/kelola-pengguna",
-  },
-  {
-    type: "item",
-    text: "Pendaftaran Relawan Pajak",
-    icon: ManageAccountsOutlinedIcon,
-    path: "/relawan-pajak",
-  },
 ];
