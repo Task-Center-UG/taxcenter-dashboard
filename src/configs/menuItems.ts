@@ -58,12 +58,6 @@ export const sidebarItems: SidebarItem[] = [
     icon: ViewCarouselOutlinedIcon,
     path: "/beranda/hero-slider",
   },
-  // {
-  //   type: "item",
-  //   text: "Company Profile",
-  //   icon: ApartmentOutlinedIcon,
-  //   path: "/beranda/company-profile",
-  // },
   {
     type: "item",
     text: "Penghargaan",
@@ -107,12 +101,6 @@ export const sidebarItems: SidebarItem[] = [
         text: "Module",
         icon: LibraryBooksOutlinedIcon,
         path: "/program/relawan-pajak/modul",
-      },
-      {
-        type: "item",
-        text: "Dokumentasi",
-        icon: DescriptionOutlinedIcon,
-        path: "/program/relawan-pajak/dokumentasi",
       },
       {
         type: "item",
