@@ -10,7 +10,7 @@ import { Gallery } from "@/store/Gallery";
 import Loader from "@/components/loading/Loader";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "../../(form)/validation";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 
 const page = () => {
   const { id } = useParams();
@@ -21,7 +21,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Gallery>(`gallery/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // USE FORM
   const methods = useForm({

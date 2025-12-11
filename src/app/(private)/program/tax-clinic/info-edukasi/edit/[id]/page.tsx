@@ -10,7 +10,7 @@ import { TaxClinic } from "@/store/TaxClinic";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "../../(form)/validation";
 import Loader from "@/components/loading/Loader";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 
 const page = () => {
   const { id } = useParams();

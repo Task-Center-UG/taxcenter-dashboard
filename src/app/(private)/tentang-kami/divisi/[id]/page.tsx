@@ -7,7 +7,7 @@ import ImagePreview from "@/components/image/ImagePreview";
 import Loader from "@/components/loading/Loader";
 import ReusableTable from "@/components/table/ReusableTable";
 import { ValueColumn } from "@/components/value/ValueColumn";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useQuery } from "@/hooks/useQuery";
 import { Division } from "@/store/Division";
 import { DivisionAssistants } from "@/store/DivisionAssistant";

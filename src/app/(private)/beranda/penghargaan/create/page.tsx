@@ -4,11 +4,11 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../(form)/Form";
 import ButtonCustom from "@/components/button/ButtonCustom";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  const { mutate, isMutating, error } = useMutation();
+  const { mutate, isMutating, error } = useMutationWithNotification();
   const router = useRouter();
 
   // USE FORM
@@ -18,12 +18,14 @@ const page = () => {
   // HADLE SUBMIT
   const onSubmit = async (data: any) => {
     console.log(data);
-    const result = await mutate("awards", "POST", data);
+    const result = await mutate(
+      "awards",
+      "POST",
+      data,
+      "Award created successfully!"
+    );
     if (result) {
-      console.log("Award created successfully!");
       router.push("/beranda/penghargaan");
-    } else {
-      console.error("Failed to create award.");
     }
   };
   const onError = (errors: any) => {

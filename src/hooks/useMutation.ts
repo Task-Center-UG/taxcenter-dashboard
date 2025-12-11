@@ -4,9 +4,8 @@ import { useState } from "react";
 import apiFetch from "@/utils/apiFetch";
 
 export const useMutation = <T, K extends Record<string, any>>() => {
-  // Add constraint to K
   const [isMutating, setIsMutating] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
 
   const mutate = async (
     endpoint: string,
@@ -45,10 +44,18 @@ export const useMutation = <T, K extends Record<string, any>>() => {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
-        const message =
-          errorData?.error?.message ||
-          `Request failed with status ${response.status}`;
-        throw new Error(message);
+        const errorObject = {
+          status: response.statusText,
+          code: response.status,
+          error: {
+            message:
+              errorData?.error?.message ||
+              errorData?.message ||
+              `Request failed with status ${response.status}`,
+          },
+        };
+        setError(errorObject);
+        throw errorObject;
       }
 
       if (response.status === 204) {
@@ -58,8 +65,8 @@ export const useMutation = <T, K extends Record<string, any>>() => {
       const json = await response.json();
       return json.data || json;
     } catch (err: any) {
-      setError(err.message);
-      return null;
+      setError(err);
+      throw err;
     } finally {
       setIsMutating(false);
     }

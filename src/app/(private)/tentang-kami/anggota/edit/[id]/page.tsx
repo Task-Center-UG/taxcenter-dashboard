@@ -10,7 +10,7 @@ import {
   DivisionAssistant,
   DivisionAssistants,
 } from "@/store/DivisionAssistant";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "../../(form)/validation";
 

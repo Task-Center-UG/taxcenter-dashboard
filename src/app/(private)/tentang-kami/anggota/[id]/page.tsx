@@ -6,7 +6,7 @@ import HeaderTitle from "@/components/card/HeaderTitle";
 import ImagePreview from "@/components/image/ImagePreview";
 import Loader from "@/components/loading/Loader";
 import { ValueColumn } from "@/components/value/ValueColumn";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useQuery } from "@/hooks/useQuery";
 import { DivisionAssistant } from "@/store/DivisionAssistant";
 import { formatDate } from "@/utils/useFormatter";

@@ -5,7 +5,7 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import Loader from "@/components/loading/Loader";
 import { ValueColumn } from "@/components/value/ValueColumn";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useQuery } from "@/hooks/useQuery";
 import { TaxClinic } from "@/store/TaxClinic";
 import { formatDate } from "@/utils/useFormatter";

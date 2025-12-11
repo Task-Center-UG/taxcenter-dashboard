@@ -5,6 +5,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import ThemeToggleButton from "@/components/button/ThemeToggleButton";
 import ReactQueryContext from "@/context/ReactQueryContext";
+import { NotificationProvider } from "@/context/NotificationContext";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -29,8 +30,10 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ReactQueryContext>
             <ThemeContextProvider>
-              {children}
-              <ThemeToggleButton />
+              <NotificationProvider>
+                {children}
+                <ThemeToggleButton />
+              </NotificationProvider>
             </ThemeContextProvider>
           </ReactQueryContext>
         </AppRouterCacheProvider>
