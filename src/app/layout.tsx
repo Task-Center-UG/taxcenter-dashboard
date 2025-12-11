@@ -6,6 +6,7 @@ import { ThemeContextProvider } from "@/context/ThemeContext";
 import ThemeToggleButton from "@/components/button/ThemeToggleButton";
 import ReactQueryContext from "@/context/ReactQueryContext";
 import { NotificationProvider } from "@/context/NotificationContext";
+import RoleGuard from "@/components/layout/RoleGuard";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -31,8 +32,10 @@ export default function RootLayout({
           <ReactQueryContext>
             <ThemeContextProvider>
               <NotificationProvider>
-                {children}
-                <ThemeToggleButton />
+                <RoleGuard>
+                  {children}
+                  <ThemeToggleButton />
+                </RoleGuard>
               </NotificationProvider>
             </ThemeContextProvider>
           </ReactQueryContext>

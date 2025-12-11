@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReusableInput from "@/components/input/ReusableInput";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
+import { saveRole, getRedirectPath } from "@/utils/roleManager";
 
 const UserSchema = z.object({
   username: z.string().min(1, "Required"),
@@ -54,8 +55,17 @@ function SignInPageContent() {
 
       if (response.data.status === "OK" && response.status === 200) {
         console.log("Login successful:", response.data);
+
+        // Save role to localStorage
+        const roleName = response.data.data?.role?.name;
+        if (roleName) {
+          saveRole(roleName);
+        }
+
+        // Redirect based on role
         const nextUrl = searchParams.get("next");
-        router.replace(nextUrl || "/dashboard");
+        const redirectPath = nextUrl || getRedirectPath();
+        router.replace(redirectPath);
         router.refresh();
       } else {
         setApiError(response.data.message || "An unexpected error occurred.");
