@@ -2,10 +2,12 @@
 
 import CreatorAvatar from "@/components/avatar/CreatorAvatar";
 import ButtonCustom from "@/components/button/ButtonCustom";
+import ButtonWithConfirmation from "@/components/button/ButtonWithConfirmation";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ChipStatus from "@/components/chip/ChipStatus";
 import Loader from "@/components/loading/Loader";
 import { ValueColumn } from "@/components/value/ValueColumn";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useQuery } from "@/hooks/useQuery";
 import { TaxVolunteerMBKM, TaxVolunteerMBKMDetail } from "@/store/TaxVolunteer";
 import { getDocumentUrl } from "@/utils/documentUrl";
@@ -21,7 +23,24 @@ const DetailMBKMPage = () => {
     data: volunteer,
     isLoading,
     error,
+    refetch,
   } = useQuery<TaxVolunteerMBKMDetail>(`tax-volunteer/mbkm-registration/${id}`);
+  const { mutate: updateStatusVolunteer } = useMutationWithNotification();
+
+  const handleActiveVolunteer = async () => {
+    const result = await updateStatusVolunteer(
+      `tax-volunteer/mbkm-registration/${id}`,
+      "PUT",
+      {
+        status: "DITERIMA",
+      }
+    );
+    if (result) {
+      refetch();
+    } else {
+      console.error("Failed to create division.");
+    }
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -39,6 +58,12 @@ const DetailMBKMPage = () => {
           color="default"
           onClick={() => router.push("/program/relawan-pajak/pengguna")}
         />
+        <div className="flex gap-2">
+          <ButtonWithConfirmation
+            label="Aktivasi Relawan Pajak"
+            onClick={handleActiveVolunteer}
+          />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-8">
@@ -58,7 +83,7 @@ const DetailMBKMPage = () => {
             <ValueColumn label="Email" value={volunteer?.email || "-"} />
             <ValueColumn
               label="Status"
-              value={<ChipStatus label={volunteer?.status} />}
+              value={<ChipStatus label={volunteer?.status.toLowerCase()} />}
             />
             <ValueColumn
               label="Created By"
