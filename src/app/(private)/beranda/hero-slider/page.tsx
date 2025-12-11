@@ -23,6 +23,9 @@ const page = () => {
   const { data, isLoading, handlePageChange } =
     useQueryWithPagination<Sliders>("cms/sliders");
 
+  console.log("[HeroSlider] data:", data);
+  console.log("[HeroSlider] paging:", data?.paging);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">

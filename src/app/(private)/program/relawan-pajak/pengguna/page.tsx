@@ -3,7 +3,7 @@
 import React from "react";
 import TabsLayout from "@/components/appbar/TabsLayout";
 import ReusableTable from "@/components/table/ReusableTable";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryWithPagination } from "@/hooks/useQueryWithPagination";
 import { TaxVolunteerMBKMs, TaxVolunteerNonMBKMs } from "@/store/TaxVolunteer";
 import { mbkmColumns, nonMbkmColumns } from "./data";
 
@@ -11,14 +11,18 @@ const MBKMTable = () => {
   const {
     data: mbkmData,
     isLoading: mbkmLoading,
-    error: mbkmError,
-  } = useQuery<TaxVolunteerMBKMs>("tax-volunteer/mbkm-registration");
+    handlePageChange: mbkmHandlePageChange,
+  } = useQueryWithPagination<TaxVolunteerMBKMs>(
+    "tax-volunteer/mbkm-registration"
+  );
 
   return (
     <ReusableTable
       columns={mbkmColumns}
       data={mbkmData?.registrations ?? []}
       isLoading={mbkmLoading}
+      paging={mbkmData?.paging}
+      onPageChange={mbkmHandlePageChange}
     />
   );
 };
@@ -27,14 +31,18 @@ const NonMBKMTable = () => {
   const {
     data: nonMbkmData,
     isLoading: nonMbkmLoading,
-    error: nonMbkmError,
-  } = useQuery<TaxVolunteerNonMBKMs>("tax-volunteer/non-mbkm-registration");
+    handlePageChange: nonMbkmHandlePageChange,
+  } = useQueryWithPagination<TaxVolunteerNonMBKMs>(
+    "tax-volunteer/non-mbkm-registration"
+  );
 
   return (
     <ReusableTable
       columns={nonMbkmColumns}
       data={nonMbkmData?.registrations ?? []}
       isLoading={nonMbkmLoading}
+      paging={nonMbkmData?.paging}
+      onPageChange={nonMbkmHandlePageChange}
     />
   );
 };

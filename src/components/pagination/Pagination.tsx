@@ -22,10 +22,6 @@ const Pagination: React.FC<PaginationProps> = ({
     onPageChange(value);
   };
 
-  if (totalPages <= 1) {
-    return null;
-  }
-
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
@@ -43,15 +39,17 @@ const Pagination: React.FC<PaginationProps> = ({
       <Typography variant="body2" color="text.secondary">
         Showing {startItem} to {endItem} of {totalItems} entries
       </Typography>
-      <MuiPagination
-        count={totalPages}
-        page={currentPage}
-        onChange={handleChange}
-        color="primary"
-        shape="rounded"
-        showFirstButton
-        showLastButton
-      />
+      {totalPages > 1 && (
+        <MuiPagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handleChange}
+          color="primary"
+          shape="rounded"
+          showFirstButton
+          showLastButton
+        />
+      )}
     </Box>
   );
 };

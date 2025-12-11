@@ -41,6 +41,10 @@ const ReusableTable = <RowType extends Record<string, unknown>>({
   paging,
   onPageChange,
 }: ReusableTableProps<RowType>) => {
+  console.log("[ReusableTable] paging:", paging);
+  console.log("[ReusableTable] onPageChange:", !!onPageChange);
+  console.log("[ReusableTable] data length:", data.length);
+
   return (
     <Box>
       <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>

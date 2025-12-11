@@ -24,9 +24,11 @@ export type TaxVolunteerMBKM = {
 
 export type TaxVolunteerMBKMs = {
   registrations: TaxVolunteerMBKM[];
-  totalPages: number;
-  currentPage: number;
-  totalItems: number;
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 };
 
 export type TaxVolunteerNonMBKM = {
@@ -55,7 +57,9 @@ export type TaxVolunteerNonMBKM = {
 
 export type TaxVolunteerNonMBKMs = {
   registrations: TaxVolunteerNonMBKM[];
-  totalPages: number;
-  currentPage: number;
-  totalItems: number;
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 };

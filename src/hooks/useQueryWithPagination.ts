@@ -40,6 +40,9 @@ export const useQueryWithPagination = <T extends QueryResponse<any>>(
       if (!response.ok) throw new Error("Network response was not ok");
       const json = await response.json();
 
+      console.log(`[useQueryWithPagination] Endpoint: ${endpoint}`, json);
+      console.log(`[useQueryWithPagination] json.data:`, json.data);
+
       setData(json.data || json);
     } catch (err: any) {
       setError(err.message);
