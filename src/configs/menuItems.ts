@@ -173,19 +173,6 @@ export const sidebarItems: SidebarItem[] = [
       },
     ],
   },
-  {
-    type: "item",
-    text: "Inklusi Pajak",
-    icon: SchoolOutlinedIcon,
-    children: [
-      {
-        type: "item",
-        text: "Mata Kuliah Wajib Umum",
-        icon: LibraryBooksOutlinedIcon,
-        path: "/program/inklusi-pajak/mkwu",
-      },
-    ],
-  },
   { type: "header", text: "KEGIATAN DAN BERITA" },
   {
     type: "item",
