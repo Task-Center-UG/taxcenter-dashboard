@@ -1,30 +1,29 @@
 export type TaxVolunteerDocumentationFile = {
   id: number;
-  file_name: string;
   file_url: string;
   created_at: string;
+  updated_at: string;
+  tax_volunteer_documentation_id: number;
 };
 
 export type TaxVolunteerDocumentation = {
   id: number;
   title: string;
-  description: string;
-  period: string;
-  files: TaxVolunteerDocumentationFile[];
+  date: string | null;
+  location: string | null;
   created_at: string;
   updated_at: string;
-  created_by?: {
+  user_id: number;
+  User: {
     id: number;
     username: string;
+    full_name: string;
   };
-  updated_by?: {
-    id: number;
-    username: string;
-  };
+  create_tax_volunteer_documentation_file: TaxVolunteerDocumentationFile[];
 };
 
 export type TaxVolunteerDocumentations = {
-  taxVolunteerDocumentations: TaxVolunteerDocumentation[];
+  documentations: TaxVolunteerDocumentation[];
   paging?: {
     page: number;
     total_pages: number;
