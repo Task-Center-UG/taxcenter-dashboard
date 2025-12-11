@@ -25,7 +25,9 @@ export type TaxVolunteerDocumentation = {
 
 export type TaxVolunteerDocumentations = {
   taxVolunteerDocumentations: TaxVolunteerDocumentation[];
-  totalPages: number;
-  currentPage: number;
-  totalItems: number;
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 };

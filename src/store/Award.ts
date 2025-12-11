@@ -6,4 +6,9 @@ export interface Award {
 
 export interface Awards {
   awards: Award[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

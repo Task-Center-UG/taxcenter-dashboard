@@ -5,13 +5,18 @@ import ReusableTable from "@/components/table/ReusableTable";
 import React from "react";
 import { columns, data } from "./data";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryWithPagination } from "@/hooks/useQueryWithPagination";
 import AddIcon from "@mui/icons-material/Add";
 import { ListGallery } from "@/store/Gallery";
 
 const page = () => {
   const route = useRouter();
-  const { data: gallery, isLoading, error } = useQuery<ListGallery>("gallery");
+  const {
+    data: gallery,
+    isLoading,
+    error,
+    handlePageChange,
+  } = useQueryWithPagination<ListGallery>("gallery");
 
   return (
     <div className="flex flex-col gap-4">
@@ -29,6 +34,8 @@ const page = () => {
         columns={columns}
         data={gallery?.gallerys ?? []}
         isLoading={isLoading}
+        paging={gallery?.paging}
+        onPageChange={handlePageChange}
       />
     </div>
   );

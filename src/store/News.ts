@@ -11,4 +11,9 @@ export interface News {
 
 export interface NewsList {
   news: News[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

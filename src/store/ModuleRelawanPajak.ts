@@ -2,6 +2,11 @@ import { UserReference } from "./User";
 
 export interface Modules {
   taxModules: Module[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }
 
 export type Module = {

@@ -5,12 +5,13 @@ import ReusableTable from "@/components/table/ReusableTable";
 import React from "react";
 import { columns } from "./data";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryWithPagination } from "@/hooks/useQueryWithPagination";
 import { Partners } from "@/store/Partner";
 
 const page = () => {
   const route = useRouter();
-  const { data: partners, isLoading, error } = useQuery<Partners>("partners");
+  const { data, isLoading, handlePageChange } =
+    useQueryWithPagination<Partners>("partners");
 
   return (
     <div className="flex flex-col gap-4">
@@ -25,8 +26,10 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={partners?.partners ?? []}
+        data={data?.partners ?? []}
         isLoading={isLoading}
+        paging={data?.paging}
+        onPageChange={handlePageChange}
       />
     </div>
   );

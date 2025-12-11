@@ -12,4 +12,9 @@ export interface TaxLearningVideo {
 
 export interface TaxLearningVideos {
   taxLearningVideos: TaxLearningVideo[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

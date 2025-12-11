@@ -11,4 +11,9 @@ export interface Seminar {
 
 export interface Seminars {
   seminars: Seminar[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

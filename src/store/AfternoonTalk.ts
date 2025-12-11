@@ -12,4 +12,9 @@ export interface AfternoonTalk {
 
 export interface AfternoonTalks {
   afternoonTalks: AfternoonTalk[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }
