@@ -11,4 +11,9 @@ export interface Publication {
 
 export interface Publications {
   publications: Publication[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

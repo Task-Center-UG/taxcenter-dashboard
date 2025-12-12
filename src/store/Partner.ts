@@ -9,4 +9,9 @@ export interface Partner {
 
 export interface Partners {
   partners: Partner[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

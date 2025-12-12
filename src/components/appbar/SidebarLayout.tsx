@@ -27,6 +27,8 @@ import Cookies from "js-cookie";
 import { Stack, Typography } from "@mui/material";
 import BaseAvatar from "../avatar/BaseAvatar";
 import { useMutation } from "@/hooks/useMutation";
+import { clearUserData } from "@/utils/userManager";
+import { useUserProfile } from "@/hooks/useUserProfile";
 
 const drawerWidth = 280;
 
@@ -105,6 +107,7 @@ export default function SidebarLayout(props: AppLayoutProps) {
   const { window, children, sidebarItems } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const { userData, loading, refetch } = useUserProfile();
   const { mutate: logout, isMutating: isLoggingOut } = useMutation();
 
   const handleDrawerClose = () => {
@@ -126,6 +129,8 @@ export default function SidebarLayout(props: AppLayoutProps) {
     const result = await logout("/auth/logout", "POST");
 
     if (result) {
+      // Clear user data from localStorage
+      clearUserData();
       router.push("/sign-in");
       router.refresh();
     } else {
@@ -134,7 +139,7 @@ export default function SidebarLayout(props: AppLayoutProps) {
   };
 
   const userMenuItems = [
-    { label: "Edit Profile", onClick: () => console.log("Editing...") },
+    // { label: "Edit Profile", onClick: () => console.log("Editing...") },
     { label: "Logout", onClick: handleLogout },
   ];
 
@@ -258,17 +263,21 @@ export default function SidebarLayout(props: AppLayoutProps) {
                 <Typography
                   sx={{ color: "black", fontSize: 16, fontWeight: 500 }}
                 >
-                  Super Admin
+                  {userData?.full_name || "User"}
                 </Typography>
                 <Typography sx={{ color: "GrayText", fontSize: 14 }}>
-                  superadmin@example.com
+                  {userData?.email || ""}
                 </Typography>
               </Box>
               <BaseAvatar
                 clickable
                 clickMode="dropdown"
                 menuItems={userMenuItems}
-                imageUrl="/path/to/image.jpg"
+                imageUrl={
+                  userData?.picture_url
+                    ? `${process.env.NEXT_PUBLIC_BASE_URL}${userData.picture_url}`
+                    : undefined
+                }
               />
             </Box>
           </Stack>

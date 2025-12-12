@@ -6,7 +6,7 @@ import HeaderTitle from "@/components/card/HeaderTitle";
 import ImagePreview from "@/components/image/ImagePreview";
 import Loader from "@/components/loading/Loader";
 import { ValueColumn } from "@/components/value/ValueColumn";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useQuery } from "@/hooks/useQuery";
 import { Gallery } from "@/store/Gallery";
 import { formatDate } from "@/utils/useFormatter";
@@ -23,16 +23,18 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Gallery>(`gallery/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // HANDLE DELETE
   const handleDelete = async () => {
-    const response = await mutate(`gallery/${id}`, "DELETE");
+    const response = await mutate(
+      `gallery/${id}`,
+      "DELETE",
+      undefined,
+      "Gallery deleted successfully!"
+    );
     if (response) {
-      console.log("Gallery deleted successfully!");
       router.push("/galeri/foto-kegiatan");
-    } else {
-      console.error("Failed to delete gallery.");
     }
   };
 

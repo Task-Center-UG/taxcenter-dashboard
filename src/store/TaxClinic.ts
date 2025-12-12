@@ -21,4 +21,9 @@ export interface TaxClinic {
 
 export interface TaxClinics {
   taxClinicServices: TaxClinic[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

@@ -11,4 +11,9 @@ export interface Gallery {
 
 export interface ListGallery {
   gallerys: Gallery[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

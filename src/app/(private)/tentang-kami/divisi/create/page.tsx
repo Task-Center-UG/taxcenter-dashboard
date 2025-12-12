@@ -6,12 +6,12 @@ import Form from "../(form)/Form";
 import ButtonCustom from "@/components/button/ButtonCustom";
 import { schema, Schema } from "../(form)/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
 const page = () => {
-  const { mutate, isMutating, error } = useMutation();
+  const { mutate, isMutating, error } = useMutationWithNotification();
   const router = useRouter();
   const queryClient = useQueryClient();
 

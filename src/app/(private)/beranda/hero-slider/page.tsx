@@ -5,13 +5,26 @@ import ReusableTable from "@/components/table/ReusableTable";
 import React from "react";
 import { columns, data } from "./data";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryWithPagination } from "@/hooks/useQueryWithPagination";
 import { Slider } from "@/store/Slider";
 import AddIcon from "@mui/icons-material/Add";
 
+interface Sliders {
+  sliders: Slider[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
+}
+
 const page = () => {
   const route = useRouter();
-  const { data: sliders, isLoading, error } = useQuery<Slider[]>("cms/sliders");
+  const { data, isLoading, handlePageChange } =
+    useQueryWithPagination<Sliders>("cms/sliders");
+
+  console.log("[HeroSlider] data:", data);
+  console.log("[HeroSlider] paging:", data?.paging);
 
   return (
     <div className="flex flex-col gap-4">
@@ -27,8 +40,10 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={sliders ?? []}
+        data={data?.sliders ?? []}
         isLoading={isLoading}
+        paging={data?.paging}
+        onPageChange={handlePageChange}
       />
     </div>
   );

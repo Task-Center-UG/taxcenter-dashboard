@@ -7,7 +7,7 @@ import ImagePreview from "@/components/image/ImagePreview";
 import Loader from "@/components/loading/Loader";
 import ReusableTable from "@/components/table/ReusableTable";
 import { ValueColumn } from "@/components/value/ValueColumn";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useQuery } from "@/hooks/useQuery";
 import { Division } from "@/store/Division";
 import { DivisionAssistants } from "@/store/DivisionAssistant";
@@ -26,7 +26,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Division>(`divisions/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const { data: assistant, isLoading: loadingAssistant } =
     useQuery<DivisionAssistants>(`division-assistants?division_id=${id}`);
   const { data: media, isLoading: loadingMedia } = useQuery<any>(

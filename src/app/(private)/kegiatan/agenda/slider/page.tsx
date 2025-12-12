@@ -5,18 +5,24 @@ import ReusableTable from "@/components/table/ReusableTable";
 import React from "react";
 import { columns } from "./data";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryWithPagination } from "@/hooks/useQueryWithPagination";
 import { AgendaSlider } from "@/store/AgendaSlider";
+
+interface AgendaSliders {
+  agendaSliders: AgendaSlider[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
+}
 
 const page = () => {
   const route = useRouter();
-  const {
-    data: agendaSliders,
-    isLoading,
-    error,
-  } = useQuery<AgendaSlider[]>("activity-agenda-image-slider");
+  const { data, isLoading, handlePageChange } =
+    useQueryWithPagination<AgendaSliders>("activity-agenda-image-slider");
 
-  console.log(agendaSliders);
+  console.log(data);
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,8 +37,10 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={agendaSliders ?? []}
+        data={data?.agendaSliders ?? []}
         isLoading={isLoading}
+        paging={data?.paging}
+        onPageChange={handlePageChange}
       />
     </div>
   );

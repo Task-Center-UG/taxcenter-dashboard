@@ -11,4 +11,9 @@ export interface Training {
 
 export interface Trainings {
   trainings: Training[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

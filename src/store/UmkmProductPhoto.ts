@@ -11,4 +11,9 @@ export interface UmkmProductPhoto {
 
 export interface UmkmProductPhotos {
   umkmProductPhoto: UmkmProductPhoto[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

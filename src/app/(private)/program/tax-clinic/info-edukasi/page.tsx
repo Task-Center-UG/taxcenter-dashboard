@@ -5,7 +5,7 @@ import ReusableTable from "@/components/table/ReusableTable";
 import React from "react";
 import { columns } from "./data";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryWithPagination } from "@/hooks/useQueryWithPagination";
 import { TaxClinics } from "@/store/TaxClinic";
 
 const page = () => {
@@ -14,7 +14,8 @@ const page = () => {
     data: taxClinics,
     isLoading,
     error,
-  } = useQuery<TaxClinics>("tax-clinic-service");
+    handlePageChange,
+  } = useQueryWithPagination<TaxClinics>("tax-clinic-service");
 
   return (
     <div className="flex flex-col gap-4">
@@ -33,6 +34,8 @@ const page = () => {
         columns={columns}
         data={taxClinics?.taxClinicServices ?? []}
         isLoading={isLoading}
+        paging={taxClinics?.paging}
+        onPageChange={handlePageChange}
       />
     </div>
   );

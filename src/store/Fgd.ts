@@ -11,4 +11,9 @@ export interface Fgd {
 
 export interface Fgds {
   fgds: Fgd[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

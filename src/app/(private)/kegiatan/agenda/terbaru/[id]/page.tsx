@@ -4,7 +4,7 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import { ValueColumn } from "@/components/value/ValueColumn";
 import { useQuery } from "@/hooks/useQuery";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { News } from "@/store/News";
 import { Card } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ const page = () => {
   const { id } = useParams();
   const router = useRouter();
   const { data: news, isLoading } = useQuery<News>(`news/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDelete = async () => {

@@ -11,4 +11,9 @@ export interface Article {
 
 export interface Articles {
   articles: Article[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

@@ -10,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ReusableInput from "@/components/input/ReusableInput";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
+import { saveRole, getRedirectPath } from "@/utils/roleManager";
+import { saveUserData } from "@/utils/userManager";
 
 const UserSchema = z.object({
   username: z.string().min(1, "Required"),
@@ -54,8 +56,43 @@ function SignInPageContent() {
 
       if (response.data.status === "OK" && response.status === 200) {
         console.log("Login successful:", response.data);
+
+        // Save role to localStorage
+        const roleName = response.data.data?.role?.name;
+        if (roleName) {
+          saveRole(roleName);
+        }
+
+        // Fetch user profile data
+        try {
+          const profileResponse = await axios.get(
+            `${proxyUrl}/v1/users/profile`,
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+            }
+          );
+
+          if (
+            profileResponse.data.status === "OK" &&
+            profileResponse.status === 200
+          ) {
+            // Save user data to localStorage
+            saveUserData(profileResponse.data.data);
+            console.log("User profile fetched:", profileResponse.data.data);
+          }
+        } catch (profileError) {
+          console.error("Failed to fetch user profile:", profileError);
+          // Continue with redirect even if profile fetch fails
+        }
+
+        // Redirect based on role
         const nextUrl = searchParams.get("next");
-        router.replace(nextUrl || "/dashboard");
+        const redirectPath = nextUrl || getRedirectPath();
+        router.replace(redirectPath);
         router.refresh();
       } else {
         setApiError(response.data.message || "An unexpected error occurred.");

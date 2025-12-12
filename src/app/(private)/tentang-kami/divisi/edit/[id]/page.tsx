@@ -10,7 +10,7 @@ import { Division } from "@/store/Division";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "../../(form)/validation";
 import Loader from "@/components/loading/Loader";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 
 const page = () => {
   const { id } = useParams();
@@ -21,7 +21,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Division>(`divisions/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // USE FORM
   const methods = useForm({

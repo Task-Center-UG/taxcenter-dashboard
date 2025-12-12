@@ -4,7 +4,7 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import { ValueColumn } from "@/components/value/ValueColumn";
 import { useQuery } from "@/hooks/useQuery";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { Publication } from "@/store/Publication";
 import { Card } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ const page = () => {
   const { data: publication, isLoading } = useQuery<Publication>(
     `publication/${id}`
   );
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDelete = async () => {

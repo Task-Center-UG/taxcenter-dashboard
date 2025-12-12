@@ -58,12 +58,6 @@ export const sidebarItems: SidebarItem[] = [
     icon: ViewCarouselOutlinedIcon,
     path: "/beranda/hero-slider",
   },
-  // {
-  //   type: "item",
-  //   text: "Company Profile",
-  //   icon: ApartmentOutlinedIcon,
-  //   path: "/beranda/company-profile",
-  // },
   {
     type: "item",
     text: "Penghargaan",
@@ -107,12 +101,6 @@ export const sidebarItems: SidebarItem[] = [
         text: "Module",
         icon: LibraryBooksOutlinedIcon,
         path: "/program/relawan-pajak/modul",
-      },
-      {
-        type: "item",
-        text: "Dokumentasi",
-        icon: DescriptionOutlinedIcon,
-        path: "/program/relawan-pajak/dokumentasi",
       },
       {
         type: "item",
@@ -185,19 +173,6 @@ export const sidebarItems: SidebarItem[] = [
       },
     ],
   },
-  {
-    type: "item",
-    text: "Inklusi Pajak",
-    icon: SchoolOutlinedIcon,
-    children: [
-      {
-        type: "item",
-        text: "Mata Kuliah Wajib Umum",
-        icon: LibraryBooksOutlinedIcon,
-        path: "/program/inklusi-pajak/mkwu",
-      },
-    ],
-  },
   { type: "header", text: "KEGIATAN DAN BERITA" },
   {
     type: "item",
@@ -255,18 +230,5 @@ export const sidebarItems: SidebarItem[] = [
     text: "Foto Kegiatan",
     icon: PhotoCameraBackOutlinedIcon,
     path: "/galeri/foto-kegiatan",
-  },
-  { type: "header", text: "LAINNYA" },
-  {
-    type: "item",
-    text: "Kelola Pengguna",
-    icon: ManageAccountsOutlinedIcon,
-    path: "/kelola-pengguna",
-  },
-  {
-    type: "item",
-    text: "Pendaftaran Relawan Pajak",
-    icon: ManageAccountsOutlinedIcon,
-    path: "/relawan-pajak",
   },
 ];

@@ -22,4 +22,9 @@ type Major = {
 
 export type DivisionAssistants = {
   divisionAssistants: DivisionAssistant[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 };

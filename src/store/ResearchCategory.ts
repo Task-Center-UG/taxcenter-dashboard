@@ -13,4 +13,9 @@ export interface ResearchCategory {
 
 export interface ResearchCategories {
   researchCategory: ResearchCategory[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

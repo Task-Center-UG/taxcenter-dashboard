@@ -1,5 +1,5 @@
 "use client";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
@@ -9,7 +9,7 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import Form from "../(form)/Form";
 
 const page = () => {
-  const { mutate, isMutating, error } = useMutation();
+  const { mutate, isMutating, error } = useMutationWithNotification();
   const router = useRouter();
   const { id } = useParams();
 

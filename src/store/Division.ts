@@ -2,6 +2,11 @@ import { UserReference } from "./User";
 
 export interface Divisions {
   divisions: Division[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }
 
 export type Division = {

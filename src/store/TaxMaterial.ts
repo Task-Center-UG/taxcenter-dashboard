@@ -12,4 +12,9 @@ export interface TaxMaterial {
 
 export interface TaxMaterials {
   mappedMaterials: TaxMaterial[];
+  paging?: {
+    page: number;
+    total_pages: number;
+    total_items: number;
+  };
 }

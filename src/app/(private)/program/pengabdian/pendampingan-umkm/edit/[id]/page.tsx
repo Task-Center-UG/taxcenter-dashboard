@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../../(form)/Form";
 import ButtonCustom from "@/components/button/ButtonCustom";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@/hooks/useQuery";
 import { Fgd } from "@/store/Fgd";
@@ -12,7 +12,7 @@ import { Loader } from "lucide-react";
 
 const page = () => {
   const { id } = useParams();
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const router = useRouter();
   const { data: fgd, isLoading } = useQuery<Fgd>(`fgd/${id}`);
   const methods = useForm();
