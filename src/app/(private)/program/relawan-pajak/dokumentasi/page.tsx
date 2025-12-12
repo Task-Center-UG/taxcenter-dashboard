@@ -16,7 +16,7 @@ const DokumentasiPage = () => {
     <div className="flex flex-col gap-4">
       <ReusableTable
         columns={columns}
-        data={data?.taxVolunteerDocumentations ?? []}
+        data={data?.documentations ?? []}
         isLoading={isLoading}
         paging={data?.paging}
         onPageChange={handlePageChange}

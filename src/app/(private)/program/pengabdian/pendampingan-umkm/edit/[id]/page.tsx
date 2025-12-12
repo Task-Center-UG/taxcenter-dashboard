@@ -12,7 +12,7 @@ import { Loader } from "lucide-react";
 
 const page = () => {
   const { id } = useParams();
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const router = useRouter();
   const { data: fgd, isLoading } = useQuery<Fgd>(`fgd/${id}`);
   const methods = useForm();

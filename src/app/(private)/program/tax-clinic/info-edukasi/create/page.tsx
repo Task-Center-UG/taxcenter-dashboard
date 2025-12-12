@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, schema } from "../(form)/validation";
 
 const page = () => {
-  const { mutate, isMutating, error } = useMutation();
+  const { mutate, isMutating, error } = useMutationWithNotification();
   const router = useRouter();
 
   // USE FORM

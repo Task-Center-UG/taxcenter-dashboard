@@ -23,7 +23,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<DivisionAssistant>(`division-assistants/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // HANDLE DELETE
   const handleDelete = async () => {

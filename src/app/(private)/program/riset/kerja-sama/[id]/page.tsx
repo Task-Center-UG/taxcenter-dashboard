@@ -22,7 +22,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Research>(`research/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // HANDLE DELETE
   const handleDelete = async () => {

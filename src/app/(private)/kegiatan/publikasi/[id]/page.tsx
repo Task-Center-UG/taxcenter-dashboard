@@ -19,7 +19,7 @@ const page = () => {
   const { data: publication, isLoading } = useQuery<Publication>(
     `publication/${id}`
   );
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDelete = async () => {

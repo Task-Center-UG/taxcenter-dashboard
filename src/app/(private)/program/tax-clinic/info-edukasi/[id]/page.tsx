@@ -32,7 +32,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<TaxClinic>(`tax-clinic-service/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // HANDLE DELETE
   const handleDelete = async () => {

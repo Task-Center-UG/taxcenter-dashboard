@@ -21,7 +21,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Research>(`research/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // USE FORM
   const methods = useForm<Schema>({

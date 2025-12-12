@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
 const page = () => {
-  const { mutate, isMutating, error } = useMutation();
+  const { mutate, isMutating, error } = useMutationWithNotification();
   const router = useRouter();
   const queryClient = useQueryClient();
 

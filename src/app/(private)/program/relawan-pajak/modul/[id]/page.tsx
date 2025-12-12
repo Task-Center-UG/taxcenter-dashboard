@@ -5,7 +5,7 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import Loader from "@/components/loading/Loader";
 import { ValueColumn } from "@/components/value/ValueColumn";
-import { useMutation } from "@/hooks/useMutation";
+import { useMutationWithNotification } from "@/hooks/useMutationWithNotification";
 import { useQuery } from "@/hooks/useQuery";
 import { Module } from "@/store/ModuleRelawanPajak";
 import { formatDate } from "@/utils/useFormatter";
@@ -22,7 +22,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Module>(`tax-module/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
 
   // HANDLE DELETE
   const handleDelete = async () => {

@@ -12,7 +12,7 @@ import Loader from "@/components/loading/Loader";
 
 const page = () => {
   const { id } = useParams();
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const router = useRouter();
   const { data: article, isLoading } = useQuery<Article>(`article/${id}`);
   const methods = useForm();

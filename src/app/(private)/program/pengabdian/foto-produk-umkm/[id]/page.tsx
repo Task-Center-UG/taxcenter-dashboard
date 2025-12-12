@@ -20,7 +20,7 @@ const page = () => {
   const { data: umkmPhoto, isLoading } = useQuery<UmkmProductPhoto>(
     `umkm-product-photo/${id}`
   );
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDelete = async () => {

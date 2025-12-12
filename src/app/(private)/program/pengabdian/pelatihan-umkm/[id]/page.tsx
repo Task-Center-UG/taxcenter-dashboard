@@ -18,7 +18,7 @@ const page = () => {
   const { id } = useParams();
   const router = useRouter();
   const { data: training, isLoading } = useQuery<Training>(`training/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDelete = async () => {

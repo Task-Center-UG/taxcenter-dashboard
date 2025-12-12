@@ -26,7 +26,7 @@ const page = () => {
     error,
     refetch,
   } = useQuery<Division>(`divisions/${id}`);
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const { data: assistant, isLoading: loadingAssistant } =
     useQuery<DivisionAssistants>(`division-assistants?division_id=${id}`);
   const { data: media, isLoading: loadingMedia } = useQuery<any>(

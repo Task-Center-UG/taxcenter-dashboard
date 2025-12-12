@@ -8,7 +8,7 @@ import { useMutationWithNotification } from "@/hooks/useMutationWithNotification
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const router = useRouter();
   const methods = useForm();
   const { handleSubmit } = methods;

@@ -9,7 +9,7 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import Form from "../(form)/Form";
 
 const page = () => {
-  const { mutate, isMutating, error } = useMutation();
+  const { mutate, isMutating, error } = useMutationWithNotification();
   const router = useRouter();
   const { id } = useParams();
 

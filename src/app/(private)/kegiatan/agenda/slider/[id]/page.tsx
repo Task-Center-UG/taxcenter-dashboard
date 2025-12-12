@@ -20,7 +20,7 @@ const page = () => {
   const { data: agendaSlider, isLoading } = useQuery<AgendaSlider>(
     `activity-agenda-image-slider/${id}`
   );
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDelete = async () => {

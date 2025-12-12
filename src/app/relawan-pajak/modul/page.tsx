@@ -80,13 +80,11 @@ const ModulPage = () => {
                     <div className="flex gap-2">
                       <ButtonCustom
                         label="View"
-                        size="small"
                         color="info"
                         to={`/relawan-pajak/modul/detail/${module.id}`}
                       />
                       <ButtonCustom
                         label="Download"
-                        size="small"
                         color="success"
                         onClick={() =>
                           handleDownload(module.file_url, module.title)

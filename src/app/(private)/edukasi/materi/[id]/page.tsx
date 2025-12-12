@@ -20,7 +20,7 @@ const page = () => {
   const { data: taxMaterial, isLoading } = useQuery<TaxMaterial>(
     `tax-material/${id}`
   );
-  const { mutate, isMutating } = useMutation();
+  const { mutate, isMutating } = useMutationWithNotification();
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleDelete = async () => {

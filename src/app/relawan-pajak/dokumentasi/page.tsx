@@ -28,11 +28,7 @@ const DokumentasiPage = () => {
       {/* Header with Add Button */}
       <div className="flex justify-between items-center">
         <HeaderTitle>Dokumentasi Tax Volunteer</HeaderTitle>
-        <ButtonCustom
-          label="Add New"
-          icon={<Plus size={18} />}
-          to="/relawan-pajak/dokumentasi/create"
-        />
+        <ButtonCustom label="Add New" to="/relawan-pajak/dokumentasi/create" />
       </div>
 
       {/* Loading State */}
@@ -77,18 +73,15 @@ const DokumentasiPage = () => {
                   <div className="flex gap-2">
                     <ButtonCustom
                       label="View"
-                      size="small"
                       color="info"
                       to={`/relawan-pajak/dokumentasi/detail/${doc.id}`}
                     />
                     <ButtonCustom
                       label="Edit"
-                      size="small"
                       to={`/relawan-pajak/dokumentasi/edit/${doc.id}`}
                     />
                     <ButtonCustom
                       label="Upload"
-                      size="small"
                       color="success"
                       to={`/relawan-pajak/dokumentasi/upload/${doc.id}`}
                     />

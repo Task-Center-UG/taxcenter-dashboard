@@ -47,7 +47,7 @@ const CreateDocumentationPage = () => {
       }
 
       // Get the ID from response
-      const documentationId = documentationResult.data?.id;
+      const documentationId = (documentationResult as any).data?.id;
 
       if (!documentationId) {
         console.error("No documentation ID returned");
@@ -143,7 +143,7 @@ const CreateDocumentationPage = () => {
                 label="Cancel"
                 color="default"
                 onClick={() => router.back()}
-                disabled={isMutating || isUploading}
+                isDisabled={isMutating || isUploading}
               />
               <ButtonCustom
                 label={isUploading ? "Uploading..." : "Create"}
