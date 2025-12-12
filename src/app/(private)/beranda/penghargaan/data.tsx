@@ -2,6 +2,7 @@ import type { Column } from "@/components/table/ReusableTable";
 import CreatorAvatar from "@/components/avatar/CreatorAvatar";
 import { formatDate } from "@/utils/useFormatter";
 import { Link } from "@mui/material";
+import ButtonCustom from "@/components/button/ButtonCustom";
 
 export const columns: Array<Column<any>> = [
   { header: "Title", accessor: "title" },
@@ -46,7 +47,13 @@ export const columns: Array<Column<any>> = [
       />
     ),
   },
-  { header: "Action", accessor: "action" },
+  {
+    header: "Action",
+    accessor: "action",
+    cell: (row) => (
+      <ButtonCustom label="View" to={`/beranda/penghargaan/${row.id}`} />
+    ),
+  },
 ];
 
 export const data: any[] = [];

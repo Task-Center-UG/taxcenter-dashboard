@@ -3,28 +3,33 @@
 import ButtonCustom from "@/components/button/ButtonCustom";
 import ReusableTable from "@/components/table/ReusableTable";
 import React from "react";
-import { columns, data } from "./data";
+import { columns } from "./data";
 import { useRouter } from "next/navigation";
 import { useQueryWithPagination } from "@/hooks/useQueryWithPagination";
 import { Slider } from "@/store/Slider";
 import AddIcon from "@mui/icons-material/Add";
+import { useQuery } from "@/hooks/useQuery";
 
-interface Sliders {
-  sliders: Slider[];
-  paging?: {
-    page: number;
-    total_pages: number;
-    total_items: number;
-  };
+export interface SliderUser {
+  id: number;
+  username: string;
+  full_name: string;
+}
+
+export interface Sliders {
+  id: number;
+  title: string;
+  picture_url: string;
+  cta_url: string;
+  created_at: string;
+  updated_at: string;
+  created_by: SliderUser;
+  updated_by: SliderUser;
 }
 
 const page = () => {
   const route = useRouter();
-  const { data, isLoading, handlePageChange } =
-    useQueryWithPagination<Sliders>("cms/sliders");
-
-  console.log("[HeroSlider] data:", data);
-  console.log("[HeroSlider] paging:", data?.paging);
+  const { data, isLoading } = useQuery<Sliders[]>("cms/sliders");
 
   return (
     <div className="flex flex-col gap-4">
@@ -40,10 +45,8 @@ const page = () => {
       </div>
       <ReusableTable
         columns={columns}
-        data={data?.sliders ?? []}
+        data={data ?? []}
         isLoading={isLoading}
-        paging={data?.paging}
-        onPageChange={handlePageChange}
       />
     </div>
   );
