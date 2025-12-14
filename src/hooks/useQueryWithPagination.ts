@@ -13,7 +13,8 @@ export const useQueryWithPagination = <T extends QueryResponse<any>>(
   endpoint: string,
   defaultPage: number = 1,
   defaultSize: number = 10,
-  additionalParams?: Record<string, string | number>
+  additionalParams?: Record<string, string | number>,
+  enabled: boolean = true
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -26,7 +27,17 @@ export const useQueryWithPagination = <T extends QueryResponse<any>>(
   const page = parseInt(searchParams.get("page") || String(defaultPage));
   const size = parseInt(searchParams.get("size") || String(defaultSize));
 
+  // Serialize additionalParams to string untuk stable dependency
+  const additionalParamsString = additionalParams
+    ? JSON.stringify(additionalParams)
+    : null;
+
   const fetchData = useCallback(async () => {
+    if (!enabled) {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     try {
@@ -35,8 +46,9 @@ export const useQueryWithPagination = <T extends QueryResponse<any>>(
       params.append("size", String(size));
 
       // Add additional params if provided
-      if (additionalParams) {
-        Object.entries(additionalParams).forEach(([key, value]) => {
+      if (additionalParamsString) {
+        const parsedParams = JSON.parse(additionalParamsString);
+        Object.entries(parsedParams).forEach(([key, value]) => {
           params.append(key, String(value));
         });
       }
@@ -57,7 +69,7 @@ export const useQueryWithPagination = <T extends QueryResponse<any>>(
     } finally {
       setIsLoading(false);
     }
-  }, [endpoint, page, size, additionalParams]);
+  }, [endpoint, page, size, additionalParamsString, enabled]);
 
   useEffect(() => {
     fetchData();

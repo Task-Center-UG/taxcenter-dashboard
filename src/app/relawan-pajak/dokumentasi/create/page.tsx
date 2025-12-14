@@ -43,26 +43,39 @@ const CreateDocumentationPage = () => {
       });
 
       if (!documentationResult) {
+        console.error("Failed to create documentation");
         return;
       }
 
-      // Get the ID from response
-      const documentationId = (documentationResult as any).data?.id;
+      // Get the ID from response - check multiple possible locations
+      const documentationId =
+        (documentationResult as any).id ||
+        (documentationResult as any).data?.id;
 
       if (!documentationId) {
-        console.error("No documentation ID returned");
+        console.error("No documentation ID returned", documentationResult);
+        // Still navigate even if no ID, as documentation was created
+        router.push("/relawan-pajak/dokumentasi");
         return;
       }
 
       // Step 2: Upload images if any
-      if (data.images && Array.isArray(data.images) && data.images.length > 0) {
-        setIsUploading(true);
+      if (data.images) {
+        const filesArray = Array.isArray(data.images)
+          ? data.images
+          : [data.images];
 
-        for (const file of data.images) {
-          await uploadFile(documentationId, file);
+        if (filesArray.length > 0 && filesArray[0] instanceof File) {
+          setIsUploading(true);
+
+          for (const file of filesArray) {
+            if (file instanceof File) {
+              await uploadFile(documentationId, file);
+            }
+          }
+
+          setIsUploading(false);
         }
-
-        setIsUploading(false);
       }
 
       router.push("/relawan-pajak/dokumentasi");

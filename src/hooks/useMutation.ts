@@ -15,24 +15,31 @@ export const useMutation = <T, K extends Record<string, any>>() => {
     setIsMutating(true);
     setError(null);
 
-    const isMultipart = payload
-      ? Object.values(payload).some((value) => value instanceof File)
-      : false;
-
     let body: BodyInit | undefined;
     const headers: HeadersInit = {};
 
-    if (isMultipart && payload) {
-      const formData = new FormData();
-      Object.entries(payload).forEach(([key, value]) => {
-        if (value !== undefined) {
-          formData.append(key, value);
-        }
-      });
-      body = formData;
+    // Check if payload is already FormData
+    if (payload instanceof FormData) {
+      body = payload;
+      // Don't set Content-Type for FormData, browser will set it with boundary
     } else {
-      body = payload ? JSON.stringify(payload) : undefined;
-      headers["Content-Type"] = "application/json";
+      // Check if payload contains File objects
+      const isMultipart = payload
+        ? Object.values(payload).some((value) => value instanceof File)
+        : false;
+
+      if (isMultipart && payload) {
+        const formData = new FormData();
+        Object.entries(payload).forEach(([key, value]) => {
+          if (value !== undefined) {
+            formData.append(key, value);
+          }
+        });
+        body = formData;
+      } else {
+        body = payload ? JSON.stringify(payload) : undefined;
+        headers["Content-Type"] = "application/json";
+      }
     }
 
     try {

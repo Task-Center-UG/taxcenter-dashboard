@@ -39,10 +39,21 @@ const UploadDocumentationPage = () => {
 
   const onSubmit = async (data: FormData) => {
     if (!data.file_url) {
+      console.error("No file selected");
       return;
     }
 
-    const result = await uploadFile(Number(id), data.file_url);
+    // Handle if file_url is an array (from ReusableUploadZone multiple)
+    const file = Array.isArray(data.file_url)
+      ? data.file_url[0]
+      : data.file_url;
+
+    if (!file) {
+      console.error("No valid file found");
+      return;
+    }
+
+    const result = await uploadFile(Number(id), file);
     if (result) {
       reset();
       refetch();

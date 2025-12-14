@@ -14,6 +14,7 @@ const colorClasses = {
 const statusClasses = {
   pending: "!bg-blue-100 !text-blue-800",
   diterima: "!bg-green-100 !text-green-800",
+  active: "!bg-green-100 !text-green-800",
 };
 
 const getStatusClassName = (status: string) => {

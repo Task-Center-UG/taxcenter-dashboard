@@ -1,29 +1,30 @@
 import { useMutationWithNotification } from "./useMutationWithNotification";
-import { useQuery } from "./useQuery";
+import { useQueryWithPagination } from "./useQueryWithPagination";
 import { TaxVolunteerDocumentations } from "@/store/TaxVolunteerDocumentation";
 import { useUserProfile } from "./useUserProfile";
-import { useState } from "react";
+import { useMemo } from "react";
 
 export const useTaxVolunteerDocumentation = () => {
   const { userData } = useUserProfile();
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const queryParams = userData?.id
-    ? `?user_id=${userData.id}&page=${currentPage}`
-    : `?page=${currentPage}`;
+  const additionalParams = useMemo(() => {
+    if (userData?.id) {
+      return { user_id: userData.id };
+    }
+    return undefined;
+  }, [userData?.id]);
 
-  const { data, isLoading, refetch } = useQuery<TaxVolunteerDocumentations>(
-    `tax-volunteer-documentation${queryParams}`
-  );
+  // Only fetch when userData is loaded
+  const { data, isLoading, refetch, handlePageChange } =
+    useQueryWithPagination<TaxVolunteerDocumentations>(
+      "tax-volunteer-documentation",
+      1,
+      10,
+      additionalParams,
+      !!userData?.id // Only enable fetch when user_id is available
+    );
 
   const { mutate, isMutating } = useMutationWithNotification();
-
-  const handlePageChange = (
-    _event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setCurrentPage(page);
-  };
 
   const createDocumentation = async (formData: {
     title: string;
@@ -88,7 +89,6 @@ export const useTaxVolunteerDocumentation = () => {
     data,
     isLoading,
     isMutating,
-    currentPage,
     handlePageChange,
     refetch,
     createDocumentation,

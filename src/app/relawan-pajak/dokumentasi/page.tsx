@@ -6,7 +6,6 @@ import ButtonCustom from "@/components/button/ButtonCustom";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ImagePreviewWithDelete from "@/components/image/ImagePreviewWithDelete";
 import { useTaxVolunteerDocumentation } from "@/hooks/useTaxVolunteerDocumentation";
-import { Plus } from "lucide-react";
 
 const DokumentasiPage = () => {
   const { data, isLoading, isMutating, handlePageChange, refetch, deleteFile } =
@@ -120,7 +119,7 @@ const DokumentasiPage = () => {
               <Pagination
                 count={data.paging.total_pages}
                 page={data.paging.page}
-                onChange={handlePageChange}
+                onChange={(e, page) => handlePageChange(page)}
                 color="primary"
                 showFirstButton
                 showLastButton
