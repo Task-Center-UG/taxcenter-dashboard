@@ -12,7 +12,8 @@ interface QueryResponse<T> {
 export const useQueryWithPagination = <T extends QueryResponse<any>>(
   endpoint: string,
   defaultPage: number = 1,
-  defaultSize: number = 10
+  defaultSize: number = 10,
+  additionalParams?: Record<string, string | number>
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -33,6 +34,13 @@ export const useQueryWithPagination = <T extends QueryResponse<any>>(
       params.append("page", String(page));
       params.append("size", String(size));
 
+      // Add additional params if provided
+      if (additionalParams) {
+        Object.entries(additionalParams).forEach(([key, value]) => {
+          params.append(key, String(value));
+        });
+      }
+
       const response = await apiFetch(`${endpoint}?${params.toString()}`, {
         method: "GET",
       });
@@ -49,7 +57,7 @@ export const useQueryWithPagination = <T extends QueryResponse<any>>(
     } finally {
       setIsLoading(false);
     }
-  }, [endpoint, page, size]);
+  }, [endpoint, page, size, additionalParams]);
 
   useEffect(() => {
     fetchData();

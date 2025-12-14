@@ -48,6 +48,12 @@ export type TaxVolunteerMBKMDetail = {
     id: number;
     name: string;
   };
+  User?: {
+    id: number;
+    username: string;
+    full_name: string;
+    email: string;
+  };
   created_by?: {
     id: number;
     username: string;
@@ -116,6 +122,12 @@ export type TaxVolunteerNonMBKMDetail = {
   Major: {
     id: number;
     name: string;
+  };
+  User?: {
+    id: number;
+    username: string;
+    full_name: string;
+    email: string;
   };
   created_by?: {
     id: number;
