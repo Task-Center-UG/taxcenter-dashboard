@@ -37,7 +37,7 @@ const DetailMBKMPage = () => {
     if (volunteer?.User?.id) {
       return { user_id: volunteer.User.id };
     }
-    return { user_id: 0 };
+    return undefined;
   }, [volunteer?.User?.id]);
 
   const {
@@ -49,7 +49,8 @@ const DetailMBKMPage = () => {
     "tax-volunteer-documentation",
     1,
     10,
-    additionalParams
+    additionalParams,
+    !!volunteer?.User?.id
   );
 
   const { mutate: deleteFileMutation } = useMutationWithNotification();
