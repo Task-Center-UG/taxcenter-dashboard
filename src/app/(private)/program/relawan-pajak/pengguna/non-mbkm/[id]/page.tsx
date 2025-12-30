@@ -2,6 +2,7 @@
 
 import CreatorAvatar from "@/components/avatar/CreatorAvatar";
 import ButtonCustom from "@/components/button/ButtonCustom";
+import ButtonWithConfirmation from "@/components/button/ButtonWithConfirmation";
 import HeaderTitle from "@/components/card/HeaderTitle";
 import ChipStatus from "@/components/chip/ChipStatus";
 import Loader from "@/components/loading/Loader";
@@ -30,9 +31,11 @@ const DetailNonMBKMPage = () => {
     data: volunteer,
     isLoading,
     error,
+    refetch,
   } = useQuery<TaxVolunteerNonMBKMDetail>(
     `tax-volunteer/non-mbkm-registration/${id}`
   );
+  const { mutate: updateStatusVolunteer } = useMutationWithNotification();
 
   const additionalParams = React.useMemo(() => {
     if (volunteer?.User?.id) {
@@ -69,6 +72,21 @@ const DetailNonMBKMPage = () => {
     setDeletingFileId(null);
   };
 
+  const handleActiveVolunteer = async () => {
+    const result = await updateStatusVolunteer(
+      `tax-volunteer/non-mbkm-registration/${id}`,
+      "PUT",
+      {
+        status: "DITERIMA",
+      }
+    );
+    if (result) {
+      refetch();
+    } else {
+      console.error("Failed to activate volunteer.");
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -83,8 +101,18 @@ const DetailNonMBKMPage = () => {
         <ButtonCustom
           label="Back"
           color="default"
-          onClick={() => router.push("/program/relawan-pajak/pengguna")}
+          onClick={() =>
+            router.push("/program/relawan-pajak/pengguna?toptab=Non+MBKM")
+          }
         />
+        <div className="flex gap-2">
+          {volunteer.status === "PENDING" && (
+            <ButtonWithConfirmation
+              label="Aktivasi Relawan Pajak"
+              onClick={handleActiveVolunteer}
+            />
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-8">

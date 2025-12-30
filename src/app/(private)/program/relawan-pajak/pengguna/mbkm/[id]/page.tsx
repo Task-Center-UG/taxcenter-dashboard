@@ -100,10 +100,12 @@ const DetailMBKMPage = () => {
           onClick={() => router.push("/program/relawan-pajak/pengguna")}
         />
         <div className="flex gap-2">
-          <ButtonWithConfirmation
-            label="Aktivasi Relawan Pajak"
-            onClick={handleActiveVolunteer}
-          />
+          {volunteer.status === "PENDING" && (
+            <ButtonWithConfirmation
+              label="Aktivasi Relawan Pajak"
+              onClick={handleActiveVolunteer}
+            />
+          )}
         </div>
       </div>
 
