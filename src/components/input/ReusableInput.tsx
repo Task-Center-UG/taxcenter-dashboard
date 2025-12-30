@@ -7,7 +7,10 @@ import {
   TextField,
   FormHelperText,
   Theme,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Control, Controller, FieldErrors, FieldError } from "react-hook-form";
 
 // Helper function remains the same
@@ -57,9 +60,14 @@ const ReusableInput = ({
   disabled = false,
   ...rest
 }: ReusableInputProps) => {
+  const [showPassword, setShowPassword] = React.useState(false);
   const showAsterisk = isRequired && !!label;
   const error = getNestedError({ errors, path: name });
   const errorMessage = error?.message;
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleSx = (theme: Theme) => ({
     backgroundColor:
@@ -131,11 +139,33 @@ const ReusableInput = ({
             error={!!error}
             disabled={disabled}
             placeholder={placeholder}
-            type={type}
+            type={
+              type === "password" && !showPassword
+                ? "password"
+                : type === "password"
+                ? "text"
+                : type
+            }
             id={`${name}`}
             multiline={multiline}
             rows={multiline ? rows : 1}
             sx={handleSx}
+            InputProps={{
+              ...(type === "password" && {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleTogglePasswordVisibility}
+                      edge="end"
+                      size="small"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }),
+            }}
           />
         )}
       />

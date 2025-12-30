@@ -100,9 +100,13 @@ function SignInPageContent() {
     } catch (error) {
       console.error("Login API failed:", error);
       if (axios.isAxiosError(error) && error.response) {
-        setApiError(
-          error.response.data.message || "Invalid username or password."
-        );
+        // Handle error structure: error.message or direct message field
+        const errorData = error.response.data;
+        const errorMessage =
+          errorData?.error?.message ||
+          errorData?.message ||
+          "Invalid username or password.";
+        setApiError(errorMessage);
       } else {
         setApiError("A network error occurred. Please try again.");
       }
@@ -139,12 +143,6 @@ function SignInPageContent() {
                 backgroundColor: "background.paper",
               }}
             >
-              {/* <img
-                src="https://assets-global.website-files.com/6597ccac92169b5965419146/659b8e28448e3a2998f80689_logo.svg"
-                alt="Utherside Logo"
-                width="120"
-              /> */}
-
               <Typography
                 component="h1"
                 variant="h5"
